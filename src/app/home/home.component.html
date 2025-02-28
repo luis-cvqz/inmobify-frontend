@@ -1,0 +1,15 @@
+<section class="search-bar">
+    <form (submit)="onSubmit($event, filter.value)">
+      <input type="text" placeholder="Busca una ciudad" #filter />
+      <button
+        class="primary"
+        type="button"
+        (click)="filterResults(filter.value)">
+        Buscar
+      </button>
+    </form>
+  </section>
+  <h2>Destacados</h2>
+  <h3>Casas</h3>
+  <h3>Departamentos</h3>
+  <h3>Locales comerciales</h3>
