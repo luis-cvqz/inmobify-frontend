@@ -1,0 +1,27 @@
+.listing {
+    background: #223252;
+    border-radius: 12px;
+    padding-bottom: 5px;
+    color: antiquewhite;
+}
+
+.listing-heading {
+    color: beige;
+    padding: 0px 20px 0 20px;
+}
+
+.listing-photo {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+}
+
+.listing-info {
+    padding: 0px 0px 0px 20px;
+}
+
+.amenities-container {
+    display: flex;
+    justify-content: space-around;
+}

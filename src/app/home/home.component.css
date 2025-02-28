@@ -28,3 +28,32 @@ button {
     border-radius: 9px;
     cursor: pointer;
 }
+
+.autocomplete-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: white;
+    max-width: 560px;
+    position: absolute;
+    z-index: 1000;
+}
+
+.autocomplete-list li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.autocomplete-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.results {
+    display: grid;
+    row-gap: 8px;
+    column-gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
+    justify-content: space-around;
+}

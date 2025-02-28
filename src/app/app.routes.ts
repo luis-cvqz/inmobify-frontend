@@ -5,7 +5,7 @@ export const routes: Routes = [
     {
         path: "",
         component: HomeComponent,
-        title: "Inicio inmobify",
+        title: "Inicio",
     },
 ];
 export default routes;
