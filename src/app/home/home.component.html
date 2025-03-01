@@ -1,0 +1,32 @@
+<section class="search-bar">
+  <form (submit)="onSubmit($event, searchTerm)">
+    <input 
+      type="text" 
+      style="font-size: 1em;"
+      placeholder="Busca una ciudad" 
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+      name="search" />
+    <button
+      class="primary"
+      style="font-size: 1em;"
+      type="button"
+      (click)="filterResults(searchTerm)">
+      Buscar
+    </button>
+  </form>
+
+  <!-- Suggestion List -->
+  <ul *ngIf="filteredCities.length > 0" class="autocomplete-list">
+    <li *ngFor="let city of filteredCities" (click)="selectCity(city)">
+      {{ city }}
+    </li>
+  </ul>
+</section>
+  <h1>Destacados</h1>
+  <h2>Casas</h2>
+  <section class="results">
+    <app-property-card></app-property-card>
+  </section>
+  <h2>Departamentos</h2>
+  <h2>Locales comerciales</h2>
