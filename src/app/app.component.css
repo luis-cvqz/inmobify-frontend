@@ -1,5 +1,7 @@
 header {
-    display: block;
-    height: 52;
-    padding: 20px;
+    display: flex;
+    align-items: center;
+    height: 68px;
+    /* padding: 20px; */
+    background-color: none;
 }
