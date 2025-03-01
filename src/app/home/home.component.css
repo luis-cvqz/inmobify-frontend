@@ -16,8 +16,9 @@
 input[type="text"] {
     flex: 1;
     border: solid 2px;
+    border-color: #ccc;
     padding: 15px;
-    border-radius: 9px;
+    border-radius: var(--border-radius);
     margin-right: 4px;
 }
 
@@ -25,7 +26,8 @@ button {
     padding: 15px;
     border: solid 1px;
     color: white;
-    border-radius: 9px;
+    background-color: slategrey;
+    border-radius: var(--border-radius);
     cursor: pointer;
 }
 
@@ -34,7 +36,7 @@ button {
     padding: 0;
     margin-top: 5px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     background: white;
     max-width: 560px;
     position: absolute;

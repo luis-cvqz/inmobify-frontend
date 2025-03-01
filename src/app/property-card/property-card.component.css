@@ -1,6 +1,6 @@
 .listing {
     background: #223252;
-    border-radius: 12px;
+    border-radius: var(--border-radius);
     padding-bottom: 5px;
     color: antiquewhite;
 }
@@ -14,7 +14,7 @@
     height: 250px;
     width: 100%;
     object-fit: cover;
-    border-radius: 12px 12px 0 0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .listing-info {
