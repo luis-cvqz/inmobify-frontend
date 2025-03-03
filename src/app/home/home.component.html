@@ -15,7 +15,6 @@
       Buscar
     </button>
   </form>
-
   <!-- Suggestion List -->
   <ul *ngIf="filteredCities.length > 0" class="autocomplete-list">
     <li *ngFor="let city of filteredCities" (click)="selectCity(city)">
@@ -23,10 +22,13 @@
     </li>
   </ul>
 </section>
-  <h1>Destacados</h1>
-  <h2>Casas</h2>
+<section>
+  <ul class="type-filters">
+    <li>Casas</li>
+    <li>Departamentos</li>
+    <li>Locales comerciales</li>
+  </ul>
+</section>
   <section class="results">
     <app-property-card></app-property-card>
   </section>
-  <h2>Departamentos</h2>
-  <h2>Locales comerciales</h2>
