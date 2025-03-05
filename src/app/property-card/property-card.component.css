@@ -1,17 +1,16 @@
 .listing {
     background: #223252;
     border-radius: var(--border-radius);
-    padding-bottom: 5px;
     color: antiquewhite;
 }
 
 .listing-heading {
     color: beige;
-    padding: 0px 20px 0 20px;
+    padding: 0px 10px 0 20px;
 }
 
 .listing-photo {
-    height: 250px;
+    /* height: 250px; */
     width: 100%;
     object-fit: cover;
     border-radius: var(--border-radius) var(--border-radius);
