@@ -67,9 +67,9 @@ ul {
 }
 
 .results {
+    margin: 0 60px 60px 60px;
     display: grid;
-    row-gap: 8px;
-    column-gap: 8px;
     grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
     justify-content: space-around;
+    row-gap: 18px;
 }

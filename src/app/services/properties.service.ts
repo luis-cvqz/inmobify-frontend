@@ -5,7 +5,7 @@ import { PropertySummary } from '../models/property-summary';
   providedIn: 'root'
 })
 export class PropertiesService {
-  url = "http://localhost:12000/boosted-properties"
+  url = "http://localhost:12004/boosted-properties"
 
   constructor() { }
 
