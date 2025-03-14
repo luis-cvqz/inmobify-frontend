@@ -22,13 +22,16 @@
     </li>
   </ul>
 </section>
-<section>
-  <ul class="type-filters">
+<section class="type-filters">
+  <ul>
+    <li>Todos</li>
     <li>Casas</li>
     <li>Departamentos</li>
     <li>Locales comerciales</li>
   </ul>
 </section>
-  <section class="results">
-    <app-property-card></app-property-card>
-  </section>
+<section class="results">
+  <app-property-card
+    *ngFor="let propertySummary of propertyList"
+    [propertySummary]="propertySummary"></app-property-card>
+</section>
