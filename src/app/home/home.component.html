@@ -1,19 +1,22 @@
 <section class="search-bar">
   <form (submit)="onSubmit($event, searchTerm)">
-    <input 
-      type="text" 
-      style="font-size: 1em;"
-      placeholder="Busca una ciudad" 
+    <input
+      type="text"
+      style="font-size: 1em"
+      placeholder="Busca una ciudad"
       [(ngModel)]="searchTerm"
       (input)="onSearch()"
-      name="search" />
+      name="search"
+    />
     <button
       class="primary"
-      style="font-size: 1em;"
+      style="font-size: 1em"
       type="button"
-      (click)="filterResults(searchTerm)">
+      (click)="filterResults(searchTerm)"
+    >
       Buscar
     </button>
+    <button style="font-size: 1em" type="button">Ver mapa</button>
   </form>
   <!-- Suggestion List -->
   <ul *ngIf="filteredCities.length > 0" class="autocomplete-list">
@@ -33,5 +36,6 @@
 <section class="results">
   <app-property-card
     *ngFor="let propertySummary of propertyList"
-    [propertySummary]="propertySummary"></app-property-card>
+    [propertySummary]="propertySummary"
+  ></app-property-card>
 </section>

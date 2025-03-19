@@ -1,9 +1,12 @@
 <main>
   <header>
-      <a [routerLink]="['/']" class="brand-name">
-        Inmobify
-      </a>
-    </header>
+    <a [routerLink]="['/']" class="brand-name"> Inmobify </a>
+    <a class="top-links">Sobre nosotros</a>
+    <button type="button" class="access-buttons">Publicar</button>
+    <button type="button" [routerLink]="['/register']" class="access-buttons">
+      Registrarse
+    </button>
+  </header>
   <section class="content">
     <router-outlet></router-outlet>
   </section>

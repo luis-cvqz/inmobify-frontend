@@ -1,26 +1,26 @@
 .listing {
-    background: #223252;
-    border-radius: var(--border-radius);
-    color: antiquewhite;
+  background: var(--primary-color);
+  border-radius: var(--border-radius);
+  color: antiquewhite;
 }
 
 .listing-heading {
-    color: beige;
-    padding: 0px 10px 0 20px;
+  color: antiquewhite;
+  padding: 0px 10px 0 20px;
 }
 
 .listing-photo {
-    /* height: 250px; */
-    width: 100%;
-    object-fit: cover;
-    border-radius: var(--border-radius) var(--border-radius);
+  /* height: 250px; */
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius) var(--border-radius);
 }
 
 .listing-info {
-    padding: 0px 0px 0px 20px;
+  padding: 0px 0px 0px 20px;
 }
 
 .amenities-container {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }

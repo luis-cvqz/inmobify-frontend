@@ -1,14 +1,37 @@
 header {
-    display: flex;
-    align-items: center;
-    height: 68px;
-    /* padding: 20px; */
-    background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  height: 68px;
+  padding-left: 10%;
+  padding-right: 10%;
+  background-color: var(--primary-color);
 }
 
 .brand-name {
-    color: white;
-    font-style: none;
-    text-decoration: none;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: white;
+  font-style: none;
+  text-decoration: none;
+  margin-left: 40px;
+  font-size: 1.4em;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+.top-links {
+  color: white;
+  margin-left: 40px;
+  font-style: none;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.access-buttons {
+  padding: 15px 20px;
+  margin-right: 10px;
+  border: solid 2px;
+  color: white;
+  border-color: var(--secondary-color);
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
 }

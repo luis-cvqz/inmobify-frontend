@@ -1,77 +1,92 @@
 .search-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 16px 0 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 16px 0 0 0;
+  position: relative;
 }
 
 .search-bar form {
-    display: flex;
-    align-items: center;
-    width: 85%;
-    max-width: 560px; 
+  display: flex;
+  align-items: center;
+  width: 85%;
+  max-width: 680px;
+  gap: 3px;
 }
 
 input[type="text"] {
-    flex: 1;
-    border: solid 2px;
-    border-color: #ccc;
-    padding: 15px;
-    border-radius: var(--border-radius);
-    margin-right: 4px;
+  flex: 1;
+  border: solid 2px;
+  border-color: #ccc;
+  padding: 15px;
+  border-radius: var(--border-radius);
+  margin-right: 3px;
 }
 
 button {
-    padding: 15px;
-    border: solid 1px;
-    color: white;
-    background-color: slategrey;
-    border-radius: var(--border-radius);
-    cursor: pointer;
+  padding: 15px 25px 15px 25px;
+  border: solid 2px;
+  color: white;
+  border-color: var(--secondary-color);
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
 }
 
+/* .view-map-button {
+  position: absolute;
+  right: 3%; /* 20px from the right edge */
+  padding: 15px 25px 15px 25px;
+  border: solid 2px;
+  color: white;
+  border-color: var(--secondary-color);
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+} */
+
 .autocomplete-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: var(--border-radius);
-    background: white;
-    max-width: 560px;
-    position: absolute;
-    z-index: 1000;
+  list-style: none;
+  padding: 0;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  background: white;
+  max-width: 560px;
+  position: absolute;
+  z-index: 1000;
 }
 
 .autocomplete-list li {
-    padding: 10px;
-    cursor: pointer;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .autocomplete-list li:hover {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .type-filters {
-    display: flex;
-    justify-content: center;
-    margin: 1em;
+  display: flex;
+  justify-content: center;
+  margin: 1em;
 }
 
 ul {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    padding: 0;
-    width: 50%;
-    list-style: none;
-    justify-content: space-around;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0;
+  width: 50%;
+  list-style: none;
+  justify-content: space-around;
 }
 
 .results {
-    margin: 0 30px 0px 30px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 440px));
-    justify-content: space-around;
-    row-gap: 18px;
+  margin: 0 30px 0px 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 440px));
+  justify-content: space-around;
+  row-gap: 18px;
 }
