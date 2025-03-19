@@ -1,11 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
-    --border-radius: 12px;
-    --primary-color: #122B45;
-    --secondary-color: #0C70DA;
+  --border-radius: 12px;
+  --primary-color: #122b45;
+  --secondary-color: #0c70da;
 }
