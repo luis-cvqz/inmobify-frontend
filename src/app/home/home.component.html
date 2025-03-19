@@ -16,8 +16,10 @@
     >
       Buscar
     </button>
-    <button style="font-size: 1em" type="button">Ver mapa</button>
   </form>
+  <div class="map-button-container">
+    <button style="font-size: 1em" type="button">Ver mapa</button>
+  </div>
   <!-- Suggestion List -->
   <ul *ngIf="filteredCities.length > 0" class="autocomplete-list">
     <li *ngFor="let city of filteredCities" (click)="selectCity(city)">

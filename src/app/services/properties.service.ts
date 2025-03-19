@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { PropertySummary } from '../models/property-summary';
+import { Injectable } from "@angular/core";
+import { PropertySummary } from "../models/property-summary";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class PropertiesService {
-  url = "http://localhost:12004/boosted-properties"
+  url = "http://localhost:12004/boosted-properties";
 
-  constructor() { }
+  constructor() {}
 
   async getBoostedProperties(): Promise<PropertySummary[]> {
     const data = await fetch(this.url);

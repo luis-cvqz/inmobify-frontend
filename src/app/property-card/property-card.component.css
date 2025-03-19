@@ -10,7 +10,6 @@
 }
 
 .listing-photo {
-  /* height: 250px; */
   width: 100%;
   object-fit: cover;
   border-radius: var(--border-radius) var(--border-radius);
@@ -22,5 +21,7 @@
 
 .amenities-container {
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
 }

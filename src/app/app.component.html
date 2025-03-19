@@ -1,11 +1,28 @@
 <main>
   <header>
     <a [routerLink]="['/']" class="brand-name"> Inmobify </a>
-    <a class="top-links">Sobre nosotros</a>
-    <button type="button" class="access-buttons">Publicar</button>
-    <button type="button" [routerLink]="['/register']" class="access-buttons">
-      Registrarse
-    </button>
+
+    <nav class="desktop-nav">
+      <a class="top-links">Sobre nosotros</a>
+      <button type="button" class="access-buttons">Publicar</button>
+      <button type="button" [routerLink]="['/register']" class="access-buttons">
+        Registrarse
+      </button>
+    </nav>
+
+    <!-- mobile -->
+    <nav class="mobile-nav">
+      <button type="button" class="icon-button">
+        <i class="fas fa-plus"></i>
+        <!-- FontAwesome or Material Icon -->
+      </button>
+      <button type="button" class="icon-button">
+        <i class="fa-solid fa-right-to-bracket"></i>
+      </button>
+      <button type="button" class="icon-button menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </nav>
   </header>
   <section class="content">
     <router-outlet></router-outlet>
