@@ -1,0 +1,32 @@
+<div class="max-w-6xl mx-auto p-6">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Menú de gestión</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Mi perfil (Left Side) -->
+    <section class="bg-white shadow-md rounded-2xl p-6 md:col-span-1">
+      <h2 class="text-xl font-semibold mb-4">Mi perfil</h2>
+      <app-user-details></app-user-details>
+    </section>
+
+    <!-- Right Side (Rentas, Solicitudes, Historial) -->
+    <div class="md:col-span-2 flex flex-col gap-6">
+      <!-- Rentas activas -->
+      <section class="bg-white shadow-md rounded-2xl p-6">
+        <h2 class="text-xl font-semibold mb-4">Rentas activas</h2>
+        <p class="text-gray-600">No hay rentas activas en este momento.</p>
+      </section>
+
+      <!-- Solicitudes de compra/renta -->
+      <section class="bg-white shadow-md rounded-2xl p-6">
+        <h2 class="text-xl font-semibold mb-4">Solicitudes de compra/renta</h2>
+        <app-requests-summary></app-requests-summary>
+      </section>
+
+      <!-- Historial de compras/rentas -->
+      <section class="bg-white shadow-md rounded-2xl p-6">
+        <h2 class="text-xl font-semibold mb-4">Historial de compras/rentas</h2>
+        <p class="text-gray-600">Aún no tienes historial de transacciones.</p>
+      </section>
+    </div>
+  </div>
+</div>
