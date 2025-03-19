@@ -6,4 +6,6 @@ body {
 
 :root {
     --border-radius: 12px;
+    --primary-color: #122B45;
+    --secondary-color: #0C70DA;
 }

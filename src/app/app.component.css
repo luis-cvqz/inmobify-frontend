@@ -3,5 +3,12 @@ header {
     align-items: center;
     height: 68px;
     /* padding: 20px; */
-    background-color: none;
+    background-color: var(--primary-color);
+}
+
+.brand-name {
+    color: white;
+    font-style: none;
+    text-decoration: none;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
