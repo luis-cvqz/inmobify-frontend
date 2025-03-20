@@ -6,7 +6,7 @@
   >
     <input
       type="text"
-      class="flex-1 p-3 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      class="flex-1 p-3 dark:text-gray-200 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       placeholder="Busca una ciudad"
       [(ngModel)]="searchTerm"
       (input)="onSearch()"
@@ -45,12 +45,24 @@
 <!-- Filter Options -->
 <section class="flex justify-center m-8">
   <ul class="flex gap-6 text-gray-700">
-    <li class="cursor-pointer hover:text-blue-600 font-medium">Todos</li>
-    <li class="cursor-pointer hover:text-blue-600 font-medium">Casas</li>
-    <li class="cursor-pointer hover:text-blue-600 font-medium">
+    <li
+      class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium"
+    >
+      Todos
+    </li>
+    <li
+      class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium"
+    >
+      Casas
+    </li>
+    <li
+      class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium"
+    >
       Departamentos
     </li>
-    <li class="cursor-pointer hover:text-blue-600 font-medium">
+    <li
+      class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium"
+    >
       Locales comerciales
     </li>
   </ul>
