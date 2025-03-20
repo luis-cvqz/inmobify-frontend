@@ -3,17 +3,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  margin: 16px 0 0 0;
+  /* width: 100%; */
+  /* margin: 16px 0 0 0; */
 }
 
-.search-bar form {
+/* .search-bar form {
   display: flex;
   align-items: center;
   width: 85%;
   max-width: 680px;
   gap: 3px;
-}
+} */
 
 input[type="text"] {
   flex: 1;
@@ -25,13 +25,13 @@ input[type="text"] {
 }
 
 button {
-  padding: 15px 25px 15px 25px;
+  /* padding: 15px 25px 15px 25px;
   border: solid 2px;
   color: white;
-  border-color: var(--secondary-color);
+  border-color: var(--secondary-color); */
   background-color: var(--secondary-color);
-  border-radius: var(--border-radius);
-  cursor: pointer;
+  /* border-radius: var(--border-radius);
+  cursor: pointer; */
 }
 
 .autocomplete-list {
@@ -72,15 +72,11 @@ ul {
 }
 
 .results {
-  margin: 0 30px 0px 30px;
-  display: grid;
+  /* margin: 0 30px 0px 30px;
+  display: grid; */
   grid-template-columns: repeat(auto-fill, minmax(250px, 440px));
-  justify-content: space-around;
-  row-gap: 18px;
-}
-
-.map-button-container {
-  margin-top: 8px;
+  /* justify-content: space-around;
+  row-gap: 18px; */
 }
 
 /* Adjust layout for smaller screens */
