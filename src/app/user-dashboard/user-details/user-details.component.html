@@ -2,15 +2,15 @@
   <img
     src="/assets/user-2.png"
     alt="user-image"
-    class="w-24 h-24 mx-auto rounded-full border border-gray-300"
+    class="w-24 h-24 mr-auto ml-auto rounded-full border border-gray-300"
   />
 
   <div class="mt-4">
     <p class="text-lg font-semibold text-gray-900">
-      Nombre: Juan Pérez Rodríguez
+      {{ user!.name }} {{ user!.last_name }}
     </p>
-    <p class="text-gray-700">Correo: juan.perez&#64;example.com</p>
-    <p class="text-gray-700">Teléfono: +56 9 1234 5678</p>
+    <p class="text-gray-700">Correo: {{ user!.email }}</p>
+    <p class="text-gray-700">Teléfono: {{ user!.phone }}</p>
   </div>
 
   <a
