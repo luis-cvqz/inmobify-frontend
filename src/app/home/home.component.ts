@@ -1,26 +1,38 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { PropertyCardComponent } from '../property-card/property-card.component';
-import { PropertySummary } from '../models/property-summary';
-import { PropertiesService } from '../services/properties.service';
+import { CommonModule } from "@angular/common";
+import { Component, inject } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { PropertyCardComponent } from "../property-card/property-card.component";
+import { PropertySummary } from "../models/property-summary";
+import { PropertiesService } from "../services/properties.service";
 
 @Component({
-  selector: 'app-home',
+  selector: "app-home",
   imports: [CommonModule, FormsModule, PropertyCardComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  templateUrl: "./home.component.html",
+  styleUrl: "./home.component.css",
 })
 export class HomeComponent {
-  searchTerm: string = '';
-  cities: string[] = ['Santiago', 'Buenos Aires', 'Lima', 'Bogotá', 'Madrid', 'Barcelona', 'Medellín', 'Quito', 'Caracas', 'Montevideo'];
+  searchTerm: string = "";
+  cities: string[] = [
+    "Santiago",
+    "Buenos Aires",
+    "Lima",
+    "Bogotá",
+    "Madrid",
+    "Barcelona",
+    "Medellín",
+    "Quito",
+    "Caracas",
+    "Montevideo",
+  ];
   filteredCities: string[] = [];
-  
+
   propertiesService: PropertiesService = inject(PropertiesService);
   propertyList: PropertySummary[] = [];
 
   constructor() {
-    this.propertiesService.getBoostedProperties()
+    this.propertiesService
+      .getBoostedProperties()
       .then((propertyList: PropertySummary[]) => {
         this.propertyList = propertyList;
       });
@@ -28,8 +40,8 @@ export class HomeComponent {
 
   onSearch() {
     if (this.searchTerm.length > 0) {
-      this.filteredCities = this.cities.filter(city =>
-        city.toLowerCase().includes(this.searchTerm.toLowerCase())
+      this.filteredCities = this.cities.filter((city) =>
+        city.toLowerCase().includes(this.searchTerm.toLowerCase()),
       );
     } else {
       this.filteredCities = [];
@@ -45,7 +57,5 @@ export class HomeComponent {
     console.log(`Searching for: ${city}`);
   }
 
-  onSubmit(event: Event, filterValue: string) {
-
-  }
+  onSubmit(event: Event, filterValue: string) {}
 }
