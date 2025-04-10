@@ -1,12 +1,15 @@
 <section class="listing dark:text-gray-200">
-  <a href="">
+  <a [routerLink]="['/property-detail', propertySummary.id]">
     <img
       class="object-cover rounded-t-xl"
       [src]="propertySummary.image_path"
       alt="House"
     />
   </a>
-  <a href="" class="no-decoration">
+  <a
+    [routerLink]="['/property-detail', propertySummary.id]"
+    class="no-decoration"
+  >
     <h2 class="text-xl m-5 mb-3 font-bold">{{ propertySummary.title }}</h2>
   </a>
   <p class="ml-5 mb-3">${{ propertySummary.price }}</p>
