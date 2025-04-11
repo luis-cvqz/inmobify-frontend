@@ -28,8 +28,9 @@
 }
 
 .login-form {
-  border: 1px solid #223252;
+  border: 1px solid #88BDF2;
   border-radius: 8px;
+  background-color: #384959;
   padding: 20px;
 }
 
@@ -52,10 +53,16 @@
   flex-direction: column;
   justify-content: center;
   overflow-y: auto;
+  margin-left: 140px;
+  margin-right: 140px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 35px;
+}
+
+.form-control{
+  border: 1px solid #88BDF2;
 }
 
 label {
@@ -97,4 +104,9 @@ button:hover {
 
 .register-text:hover {
   text-decoration: underline;
+}
+
+h1 {
+  text-align: center;
+  padding-bottom: 20px;
 }
