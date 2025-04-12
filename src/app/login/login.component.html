@@ -5,14 +5,14 @@
     </div>
 
     <div class="form-section">
-      <h2>Iniciar sesión</h2>
+      <h1 class="text-gray-300 font-extrabold text-[48px] text-align:center">Iniciar sesión</h1>
       <form class="login-form">
         <div class="form-group">
-          <label for="username">Correo electrónico o teléfono</label>
+          <label class="text-gray-300" for="username">Correo electrónico o teléfono</label>
           <input
             type="text"
             style="font-size: 1em"
-            class="form-control"
+            class="form-control text-gray-300"
             id="username"
             placeholder="Ingresa tu usuario"
             [(ngModel)]="username"
@@ -21,10 +21,10 @@
         </div>
 
         <div class="form-group">
-          <label for="password">Contraseña</label>
+          <label class="text-gray-300" for="password">Contraseña</label>
           <input
             type="password"
-            class="form-control"
+            class="form-control text-gray-300"
             id="password"
             placeholder="Ingresa tu contraseña"
             [(ngModel)]="password"
@@ -35,7 +35,7 @@
         <button type="submit" class="btn btn-primary" (click)="onSubmit()">Ingresar</button>
 
         <div class="register-link">
-          <label>¿No tienes cuenta? <a routerLink="/register" class="register-text">Regístrate</a></label>
+          <label class="text-gray-300">¿No tienes cuenta? <a routerLink="/register" class="register-text">Regístrate</a></label>
         </div>
       </form>
     </div>
