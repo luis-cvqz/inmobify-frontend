@@ -1,18 +1,18 @@
-<div class="container">
-  <div class="login-wrapper">
-    <div class="image-section">
-      <img src="/assets/login/login_img.png" alt="Login Image" class="login-image">
+<div class="max-w-full h-screen flex">
+  <div class="login-wrapper flex w-full h-full flex-row overflow-hidden">
+    <div class="image-section h-full max-w-[50%] min-w-[200px] flex-shrink-0">
+      <img ngSrc="/assets/login/login_img.png" alt="Login Image" class="h-full w-full object-cover" height="940"
+           width="627">
     </div>
 
-    <div class="form-section">
-      <h1 class="text-gray-300 font-extrabold text-[48px] text-align:center">Iniciar sesión</h1>
-      <form class="login-form">
-        <div class="form-group">
-          <label class="text-gray-300" for="username">Correo electrónico o teléfono</label>
+    <div class="form-section flex-1 flex flex-col justify-center mx-36 max-md:mx-2.5">
+      <h1 class="text-gray-300 font-extrabold text-5xl text-center mb-5">Iniciar sesión</h1>
+      <form class="login-form bg-[#384959] border border-[#88BDF2] rounded-lg p-5">
+        <div class="form-group mb-9">
+          <label class="text-gray-300 block mb-2" for="username">Correo electrónico o teléfono</label>
           <input
             type="text"
-            style="font-size: 1em"
-            class="form-control text-gray-300"
+            class="form-control w-full p-2 text-gray-300 border border-[#88BDF2] rounded-lg bg-transparent placeholder-gray-400 text-base"
             id="username"
             placeholder="Ingresa tu usuario"
             [(ngModel)]="username"
@@ -20,11 +20,11 @@
             required>
         </div>
 
-        <div class="form-group">
-          <label class="text-gray-300" for="password">Contraseña</label>
+        <div class="form-group mb-9">
+          <label class="text-gray-300 block mb-2" for="password">Contraseña</label>
           <input
             type="password"
-            class="form-control text-gray-300"
+            class="form-control w-full p-2 text-gray-300 border border-[#88BDF2] rounded-lg bg-transparent placeholder-gray-400"
             id="password"
             placeholder="Ingresa tu contraseña"
             [(ngModel)]="password"
@@ -32,10 +32,10 @@
             required>
         </div>
 
-        <button type="submit" class="btn btn-primary" (click)="onSubmit()">Ingresar</button>
+        <button type="submit" class="w-full py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" (click)="onSubmit()">Ingresar</button>
 
-        <div class="register-link">
-          <label class="text-gray-300">¿No tienes cuenta? <a routerLink="/register" class="register-text">Regístrate</a></label>
+        <div class="register-link mt-2.5 text-center">
+          <label class="text-gray-300">¿No tienes cuenta? <a routerLink="/register" class="text-blue-600 hover:underline">Regístrate</a></label>
         </div>
       </form>
     </div>
