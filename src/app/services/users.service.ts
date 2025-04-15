@@ -5,7 +5,7 @@ import { UserNoPass } from "../models/user-no-pass";
   providedIn: "root",
 })
 export class UsersService {
-  private url = "http://localhost:12005/user";
+  private url = "http://localhost:12000/imf-users/users";
 
   constructor() {}
 
@@ -18,8 +18,11 @@ export class UsersService {
       },
     });
 
-    if (!response.ok) throw new Error(`HTTP error status: ${response.status}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error status: ${response.status}`);
+    }
 
-    return await response.json();
+    const user = await response.json();
+    return user;
   }
 }
