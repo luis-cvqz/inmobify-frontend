@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { NgOptimizedImage, CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { UsersService } from '../services/users.service';
+import { AuthStateService } from '../services/auth-state.service';
 
 @Component({
   selector: 'app-login',
@@ -14,21 +16,23 @@ import { AuthService } from '../services/auth.service';
     CommonModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,
+    private authStateService: AuthStateService,
+    private router: Router
+  ) {}
 
-  onSubmit() {
-    console.log('onSubmit ejecutado', { email: this.email, password: this.password });
-
+  async onSubmit() {
     if (!this.email || !this.password) {
       this.errorMessage = 'Por favor, completa todos los campos.';
-      console.log('Campos vacíos');
       return;
     }
 
@@ -37,15 +41,19 @@ export class LoginComponent {
       password: this.password
     };
 
-    this.authService.login(credentials).subscribe({
-      next: (response) => {
-        console.log('Login exitoso:', response);
-        this.router.navigate(['/']);
-      },
-      error: (error) => {
-        console.error('Error en el login:', error);
-        this.errorMessage = 'Error al iniciar sesión. Verifica tus credenciales o la conexión al servidor.';
+    try {
+      await this.authService.login(credentials);
+      const userId = localStorage.getItem('user_uuid');
+
+      if (userId) {
+        const user = await this.usersService.fetchUser(userId);
+        this.authStateService.notifyAuthChange();
+        await this.router.navigate(['/']);
+      } else {
+        this.errorMessage = 'No se recibió el ID del usuario.';
       }
-    });
+    } catch (error: any) {
+      this.errorMessage = error.message === 'Falta token' ? 'No se recibió el token de autenticación. Contacta al administrador.' : error.message || 'Error al iniciar sesión. Verifica tus credenciales.';
+    }
   }
 }
