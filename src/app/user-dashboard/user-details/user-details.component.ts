@@ -22,7 +22,13 @@ export class UserDetailsComponent {
   };
 
   constructor() {
-    const user_id = localStorage.getItem("user_id") || "s";
+    const user_id = localStorage.getItem("user_uuid");
+
+    if (!user_id) {
+      console.error("User ID not found");
+      return;
+    }
+
     this.usersService.fetchUser(user_id).then((user: UserNoPass) => {
       this.user = user;
     });
