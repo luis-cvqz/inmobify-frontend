@@ -6,9 +6,11 @@
 
     <!-- Normal -->
     <nav class="hidden md:flex items-center w-full gap-3 ml-8 mr-8">
-      <a class="text-white hover:text-blue-600" [routerLink]="['/']">Sobre nosotros</a>
+      <a class="text-white hover:text-blue-600" [routerLink]="['/']"
+        >Sobre nosotros</a
+      >
 
-      <div class="flex gap-3 ml-auto">
+      <div class="flex gap-6 ml-auto items-center">
         <button
           type="button"
           class="py-3 px-6 text-white cursor-pointer text-base rounded-xl access-buttons"
@@ -33,17 +35,17 @@
               class="text-white text-2xl cursor-pointer"
               title="Perfil de usuario"
             >
-              <i class="fas fa-user-circle"></i>
+              <i class="fas fa-user-circle text-3xl"></i>
             </button>
             <div
               *ngIf="showUserMenu"
               class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-lg py-2 z-10"
             >
               <p class="px-4 py-2 text-gray-800 dark:text-gray-200">
-                {{ user?.name || 'Usuario' }} {{ user?.last_name || '' }}
+                {{ user?.name || "Usuario" }} {{ user?.last_name || "" }}
               </p>
               <a
-                [routerLink]="['/user-details']"
+                [routerLink]="['/user-dashboard']"
                 class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
               >
                 Ver detalles

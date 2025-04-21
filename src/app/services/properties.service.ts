@@ -8,12 +8,14 @@ import { HttpClient } from "@angular/common/http";
   providedIn: "root",
 })
 export class PropertiesService {
-  url = "http://localhost:12000";
+  url = "http://localhost:12000/imf-properties";
 
   constructor(private http: HttpClient) {}
 
   async getBoostedProperties(): Promise<PropertySummary[]> {
-    const data = await fetch(`http://localhost:12000/boosted-properties`);
+    const data = await fetch(
+      `http://localhost:12000/imf-properties/boosted-properties`,
+    );
     return (await data.json()) ?? [];
   }
 
