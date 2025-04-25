@@ -1,0 +1,80 @@
+<section
+  class="max-w-6xl mx-auto p-6"
+  *ngIf="propertyDetails$ | async as propertyDetails"
+>
+  <img
+    [src]="propertyDetails.image_path"
+    class="rounded-xl object-cover w-full h-96"
+  />
+  <h1 class="text-3xl m-5 mb-3 font-bold dark:text-gray-200">
+    {{ propertyDetails.title }}
+  </h1>
+  <div class="m-5 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Left Side: Property Details and Description -->
+    <div class="md:col-span-2">
+      <div class="flex items-center justify-start gap-2 mb-5 flex-wrap">
+        <i class="fa-solid fa-money-bill text-xl dark:text-gray-200"></i>
+        <span class="dark:text-gray-200">Venta</span>
+      </div>
+
+      <!-- Property Details -->
+      <div class="flex items-center justify-start gap-4 pb-2 flex-wrap">
+        <div class="flex items-center gap-2">
+          <i class="text-xl fa-solid fa-bed dark:text-gray-200"></i>
+          <span class="dark:text-gray-200"
+            >{{ propertyDetails.n_rooms }} Recamaras</span
+          >
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="text-xl fa-solid fa-bath dark:text-gray-200"></i>
+          <span class="dark:text-gray-200"
+            >{{ propertyDetails.n_bathrooms }} Baños completos</span
+          >
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="text-xl fa-solid fa-ruler dark:text-gray-200"></i>
+          <span class="dark:text-gray-200">{{ propertyDetails.sqm }}m²</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="text-xl fa-solid fa-location-dot dark:text-gray-200"></i>
+          <span class="dark:text-gray-200">
+            {{ propertyDetails.street }} {{ propertyDetails.house_number }},
+            {{ propertyDetails.neighborhood }}, {{ propertyDetails.zip_code }},
+            {{ propertyDetails.city }}, {{ propertyDetails.state }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <h2 class="text-xl mt-6 mb-3 font-bold dark:text-gray-200">
+        Descripción
+      </h2>
+      <p class="mt-4">{{ propertyDetails.description }}</p>
+    </div>
+
+    <!-- Right Side: Section -->
+    <section class="p-5 md:col-span-1 bg-zinc-100 shadow-sm rounded-xl">
+      <p class="text-center">Precio:</p>
+      <p class="text-center text-2xl font-bold mb-4 mt-1">
+        ${{ propertyDetails.price }}
+      </p>
+      <button
+        type="button"
+        class="py-3 px-6 w-full text-white bg-blue-600 cursor-pointer hover:bg-blue-700 rounded-xl text-base font-medium transition-colors duration-200"
+      >
+        Comprar
+      </button>
+      <hr class="my-6 border-t border-gray-300" />
+      <p>Información de propietario</p>
+      <hr class="my-6 border-t border-gray-300" />
+      <button
+        type="button"
+        class="py-3 px-6 w-full text-white bg-blue-600 cursor-pointer hover:bg-blue-700 rounded-xl text-base font-medium transition-colors duration-200"
+      >
+        Agendar cita
+      </button>
+    </section>
+  </div>
+  <h2 class="text-xl mt-6 mb-3 font-bold dark:text-gray-200">Ubicación</h2>
+  <section class="p-5 rounded-xl bg-gray-200 w-full min-h-96"></section>
+</section>
