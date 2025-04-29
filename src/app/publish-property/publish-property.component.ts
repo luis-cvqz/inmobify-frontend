@@ -1,5 +1,6 @@
 /// <reference types="@types/google.maps" />
 
+import { environment } from "../../environment/environment";
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
@@ -173,15 +174,52 @@ export class PublishPropertyComponent {
   map!: google.maps.Map;
 
   async ngOnInit(): Promise<void> {
-    this.initMap();
     try {
+      await this.loadGoogleMapsScript();
+      this.initMap();
       this.states = await this.propertiesService.getStates();
     } catch (error) {
       console.error("Failed to load states", error);
     }
   }
 
+  loadGoogleMapsScript(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (typeof google !== "undefined" && google.maps) {
+        console.log("Google Maps API already loaded.");
+        resolve();
+        return;
+      }
+
+      console.log(
+        "Loading Google Maps API with key:",
+        environment.googleMapsApiKey,
+      );
+      const script = document.createElement("script");
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+
+      (window as any).initMap = () => {
+        console.log("Google Maps script loaded successfully.");
+        resolve();
+      };
+
+      script.onerror = (error) => {
+        console.error("Error loading Google Maps script:", error);
+        reject(new Error("Failed to load Google Maps script"));
+      };
+
+      document.head.appendChild(script);
+    });
+  }
+
   initMap(): void {
+    if (typeof google === "undefined" || !google.maps) {
+      console.error("Google Maps API not loaded.");
+      return;
+    }
+
     this.map = new google.maps.Map(
       document.getElementById("map") as HTMLElement,
       {
