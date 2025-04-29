@@ -1,6 +1,6 @@
 /// <reference types="@types/google.maps" />
 
-import { environment } from "../../environment/environment";
+import { environment } from "../../environments/environment";
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
