@@ -11,13 +11,6 @@
       >
 
       <div class="flex gap-6 ml-auto items-center">
-        <button
-          type="button"
-          class="py-3 px-6 text-white cursor-pointer text-base rounded-xl access-buttons"
-        >
-          Publicar
-        </button>
-
         <ng-container *ngIf="!isAuthenticated; else userMenu">
           <button
             type="button"
@@ -28,7 +21,14 @@
           </button>
         </ng-container>
         <ng-template #userMenu>
-          <div class="relative">
+          <div class="relative flex items-center">
+            <button
+              type="button"
+              [routerLink]="['/publish-property']"
+              class="py-3 px-6 mr-6 text-white cursor-pointer text-base rounded-xl access-buttons"
+            >
+              Publicar
+            </button>
             <button
               type="button"
               (click)="toggleUserMenu()"
