@@ -191,10 +191,6 @@ export class PublishPropertyComponent {
         return;
       }
 
-      console.log(
-        "Loading Google Maps API with key:",
-        environment.googleMapsApiKey,
-      );
       const script = document.createElement("script");
       script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&callback=initMap`;
       script.async = true;
