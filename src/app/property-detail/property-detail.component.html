@@ -14,7 +14,9 @@
     <div class="md:col-span-2">
       <div class="flex items-center justify-start gap-2 mb-5 flex-wrap">
         <i class="fa-solid fa-money-bill text-xl dark:text-gray-200"></i>
-        <span class="dark:text-gray-200">Venta</span>
+        <span class="dark:text-gray-200">{{
+          propertyDetails.disposition === "sale" ? "Venta" : "Renta"
+        }}</span>
       </div>
 
       <!-- Property Details -->
@@ -49,7 +51,7 @@
       <h2 class="text-xl mt-6 mb-3 font-bold dark:text-gray-200">
         Descripción
       </h2>
-      <p class="mt-4">{{ propertyDetails.description }}</p>
+      <p class="mt-4 dark:text-gray-200">{{ propertyDetails.description }}</p>
     </div>
 
     <!-- Right Side: Section -->
@@ -76,5 +78,5 @@
     </section>
   </div>
   <h2 class="text-xl mt-6 mb-3 font-bold dark:text-gray-200">Ubicación</h2>
-  <section class="p-5 rounded-xl bg-gray-200 w-full min-h-96"></section>
+  <div id="map" class="mb-8" style="width: 100%; height: 400px"></div>
 </section>
