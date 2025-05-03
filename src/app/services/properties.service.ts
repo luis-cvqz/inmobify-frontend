@@ -4,6 +4,7 @@ import { NewProperty } from "../models/new-property";
 import { firstValueFrom, map, Observable } from "rxjs";
 import { PropertyDetails } from "../models/property-details";
 import { HttpClient } from "@angular/common/http";
+import { PropertyPreview } from "../models/property-preview";
 
 @Injectable({
   providedIn: "root",
@@ -16,6 +17,15 @@ export class PropertiesService {
   async getBoostedProperties(): Promise<PropertySummary[]> {
     const data = await fetch(`${this.url}/boosted-properties`);
     return (await data.json()) ?? [];
+  }
+
+  async getUserPropertiesPreview(user_id: string): Promise<PropertyPreview[]> {
+    const response = await fetch(
+      `${this.url}/user-properties-preview/${user_id}`,
+    );
+    if (!response.ok)
+      throw new Error("Failed to fetch user properties preview");
+    return await response.json();
   }
 
   getPropertyDetails(id: string): Observable<PropertyDetails> {
