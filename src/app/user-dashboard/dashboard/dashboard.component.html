@@ -10,6 +10,19 @@
 
     <!-- Right Side (Rentas, Solicitudes, Historial) -->
     <div class="md:col-span-2 flex flex-col gap-6">
+      <!-- Posts -->
+      <section class="bg-white shadow-md rounded-2xl p-6">
+        <h2 class="text-xl font-semibold mb-4">Mis propiedades</h2>
+        <app-posts-summary></app-posts-summary>
+        <button
+          type="button"
+          [routerLink]="['/publish-property']"
+          class="cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition disabled:opacity-50 mt-4"
+        >
+          Añadir nueva propiedad
+        </button>
+      </section>
+
       <!-- Rentas activas -->
       <section class="bg-white shadow-md rounded-2xl p-6">
         <h2 class="text-xl font-semibold mb-4">Rentas activas</h2>
