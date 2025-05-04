@@ -56,7 +56,5 @@ export class PostsSummaryComponent {
     if (index !== -1) {
       this.properties.splice(index, 1);
     }
-
-    alert("Propiedad eliminada exitosamente");
   }
 }
