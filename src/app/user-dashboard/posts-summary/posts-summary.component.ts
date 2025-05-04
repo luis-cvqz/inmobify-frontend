@@ -12,8 +12,7 @@ import { Router, RouterModule } from "@angular/router";
 })
 export class PostsSummaryComponent {
   properties: PropertyPreview[] = [];
-  userId = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
-  // userId = localStorage.getItem("user_uuid")!;
+  userId = localStorage.getItem("user_uuid")!;
 
   constructor(
     private propertiesService: PropertiesService,
@@ -44,8 +43,20 @@ export class PostsSummaryComponent {
     // navigate to edit page or open modal
   }
 
-  onDelete(property: any) {
-    console.log("Delete clicked:", property);
-    // confirm and call delete API
+  async onDelete(property_id: string) {
+    const confirmation = confirm(
+      "¿Estás seguro de que quieres eliminar esta propiedad?",
+    );
+    if (!confirmation) return;
+
+    await this.propertiesService.deleteProperty(property_id);
+    await this.propertiesService.deletePropertyImagesDirectory(property_id);
+
+    const index = this.properties.findIndex((p) => p.id === property_id);
+    if (index !== -1) {
+      this.properties.splice(index, 1);
+    }
+
+    alert("Propiedad eliminada exitosamente");
   }
 }

@@ -10,18 +10,19 @@ import { PropertyPreview } from "../models/property-preview";
   providedIn: "root",
 })
 export class PropertiesService {
-  url = "http://localhost:12000/imf-properties";
+  propertiesUrl = "http://localhost:12000/imf-properties";
+  fileServerUrl = "http://localhost:12000/imf-files";
 
   constructor(private http: HttpClient) {}
 
   async getBoostedProperties(): Promise<PropertySummary[]> {
-    const data = await fetch(`${this.url}/boosted-properties`);
+    const data = await fetch(`${this.propertiesUrl}/boosted-properties`);
     return (await data.json()) ?? [];
   }
 
   async getUserPropertiesPreview(user_id: string): Promise<PropertyPreview[]> {
     const response = await fetch(
-      `${this.url}/user-properties-preview/${user_id}`,
+      `${this.propertiesUrl}/user-properties-preview/${user_id}`,
     );
     if (!response.ok)
       throw new Error("Failed to fetch user properties preview");
@@ -30,7 +31,7 @@ export class PropertiesService {
 
   getPropertyDetails(id: string): Observable<PropertyDetails> {
     return this.http
-      .get<PropertyDetails>(`${this.url}/property/${id}`)
+      .get<PropertyDetails>(`${this.propertiesUrl}/property/${id}`)
       .pipe(map((data) => data ?? {}));
   }
 
@@ -41,7 +42,7 @@ export class PropertiesService {
     try {
       const response = await firstValueFrom(
         this.http.post<any>(
-          `https://inmobify-file-server-n2yz.shuttle.app/upload/${property_uuid}`,
+          `http://localhost:12006/upload/${property_uuid}`,
           formData,
           {
             observe: "response",
@@ -62,15 +63,45 @@ export class PropertiesService {
 
   async updateImagePath(id: string, img_path: string): Promise<any> {
     return await firstValueFrom(
-      this.http.put(`${this.url}/property-img-path/${id}`, { img_path }),
+      this.http.put(`${this.propertiesUrl}/property-img-path/${id}`, {
+        img_path,
+      }),
+    );
+  }
+
+  async deletePropertyImage(
+    property_uuid: string,
+    fileName: string,
+  ): Promise<any> {
+    return await firstValueFrom(
+      this.http.delete(
+        `${this.fileServerUrl}/imf-files/file/${property_uuid}`,
+        {
+          body: { filename: fileName },
+        },
+      ),
+    );
+  }
+
+  async deletePropertyImagesDirectory(property_uuid: string): Promise<any> {
+    return await firstValueFrom(
+      this.http.delete(`${this.fileServerUrl}/directory/${property_uuid}`),
     );
   }
 
   async postProperty(newProperty: NewProperty): Promise<any> {
-    return firstValueFrom(this.http.post(`${this.url}/property`, newProperty));
+    return firstValueFrom(
+      this.http.post(`${this.propertiesUrl}/property`, newProperty),
+    );
+  }
+
+  async deleteProperty(id: string): Promise<any> {
+    return await firstValueFrom(
+      this.http.delete(`${this.propertiesUrl}/property/${id}`),
+    );
   }
 
   async getStates(): Promise<any> {
-    return await firstValueFrom(this.http.get(`${this.url}/states`));
+    return await firstValueFrom(this.http.get(`${this.propertiesUrl}/states`));
   }
 }
