@@ -10,10 +10,10 @@
     [routerLink]="['/property-detail', propertySummary.id]"
     class="no-decoration"
   >
-    <h2 class="text-xl m-5 mb-3 font-bold">{{ propertySummary.title }}</h2>
+    <h2 class="text-xl m-5 mb-5 font-bold">{{ propertySummary.title }}</h2>
   </a>
-  <p class="ml-5 mb-3">${{ propertySummary.price }}</p>
-  <p class="ml-5">
+  <p class="ml-5 mb-5">${{ propertySummary.price }}</p>
+  <p class="ml-5 mr-5">
     {{ propertySummary.street }} {{ propertySummary.house_number }},
     {{ propertySummary.neighborhood }}, {{ propertySummary.zip_code }},
     {{ propertySummary.city }}, {{ propertySummary.state }}
