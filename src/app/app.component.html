@@ -21,41 +21,49 @@
           </button>
         </ng-container>
         <ng-template #userMenu>
-          <div class="relative flex items-center">
+          <div class="relative flex items-center space-x-4">
             <button
               type="button"
               [routerLink]="['/publish-property']"
-              class="py-3 px-6 mr-6 text-white cursor-pointer text-base rounded-xl access-buttons"
+              class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition duration-200 cursor-pointer"
             >
               Publicar
             </button>
             <button
               type="button"
               (click)="toggleUserMenu()"
-              class="text-white text-2xl cursor-pointer"
+              class="text-white text-3xl cursor-pointer hover:text-gray-300 transition duration-150"
               title="Perfil de usuario"
             >
               <i class="fas fa-user-circle text-3xl"></i>
             </button>
-            <div
-              *ngIf="showUserMenu"
-              class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-lg py-2 z-10"
-            >
-              <p class="px-4 py-2 text-gray-800 dark:text-gray-200">
-                {{ user?.name || "Usuario" }} {{ user?.last_name || "" }}
-              </p>
-              <a
-                [routerLink]="['/user-dashboard']"
-                class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
+            <div class="relative flex items-center space-x-4">
+              <div
+                *ngIf="showUserMenu"
+                class="absolute top-full right-0 mt-6 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50 overflow-hidden border border-gray-200 dark:border-gray-600"
               >
-                Ver detalles
-              </a>
-              <button
-                (click)="logout()"
-                class="block w-full text-left px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
-              >
-                Cerrar sesión
-              </button>
+                <div
+                  class="px-4 py-3 border-b border-gray-100 dark:border-gray-700"
+                >
+                  <p
+                    class="text-sm font-semibold text-gray-800 dark:text-gray-100"
+                  >
+                    {{ user?.name || "Usuario" }} {{ user?.last_name || "" }}
+                  </p>
+                </div>
+                <a
+                  [routerLink]="['/user-dashboard']"
+                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                >
+                  Mi perfil
+                </a>
+                <button
+                  (click)="logout()"
+                  class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                >
+                  Cerrar sesión
+                </button>
+              </div>
             </div>
           </div>
         </ng-template>

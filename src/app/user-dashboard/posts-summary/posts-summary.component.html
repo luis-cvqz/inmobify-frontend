@@ -1,4 +1,4 @@
-<ng-container *ngIf="userId; else notLoggedIn">
+<ng-container *ngIf="userId && properties.length > 0; else notAvailable">
   <div class="overflow-x-auto">
     <table class="min-w-full border-collapse border border-gray-300">
       <thead class="bg-gray-200">
@@ -68,6 +68,6 @@
   </div>
 </ng-container>
 
-<ng-template #notLoggedIn>
-  <p class="text-gray-600">Debes iniciar sesión para ver tus propiedades.</p>
+<ng-template #notAvailable>
+  <p class="text-gray-600">No hay propiedades para mostrar en este momento.</p>
 </ng-template>
