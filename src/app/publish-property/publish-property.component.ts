@@ -70,6 +70,7 @@ export class PublishPropertyComponent {
     this.formData.images.splice(index, 1);
   }
 
+  fileServerUrl = "http://localhost:12000/imf-files";
   private propertiesService: PropertiesService = inject(PropertiesService);
   uploadMessages: string[] = [];
   async onSubmit() {
@@ -106,7 +107,7 @@ export class PublishPropertyComponent {
 
       await this.propertiesService.updateImagePath(
         propertyId,
-        `https://inmobify-file-server-n2yz.shuttle.app/images/${propertyId}/${this.formData.images[0].name}`,
+        `${this.fileServerUrl}/images/${propertyId}/${this.formData.images[0].name}`,
       );
 
       alert("Propiedad publicada exitosamente!");
