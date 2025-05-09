@@ -1,28 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { AuthService } from './services/auth.service';
-import { UsersService } from './services/users.service';
-import { AuthStateService } from './services/auth-state.service';
-import { UserNoPass } from './models/user-no-pass';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { AuthService } from "./services/auth.service";
+import { UsersService } from "./services/users.service";
+import { AuthStateService } from "./services/auth-state.service";
+import { UserNoPass } from "./models/user-no-pass";
+import { CommonModule } from "@angular/common";
+import { GoogleMapsModule } from "@angular/google-maps";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
-  imports: [RouterModule, CommonModule],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  imports: [RouterModule, CommonModule, GoogleMapsModule],
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
   isAuthenticated: boolean = false;
   user: UserNoPass | null = null;
   showUserMenu: boolean = false;
-  title = 'inmobify';
+  title = "inmobify";
 
   constructor(
     private authService: AuthService,
     private usersService: UsersService,
-    private authStateService: AuthStateService
+    private authStateService: AuthStateService,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -36,13 +37,13 @@ export class AppComponent implements OnInit {
   async checkAuthState(): Promise<void> {
     this.isAuthenticated = this.authService.isAuthenticated();
     if (this.isAuthenticated) {
-      const userId = localStorage.getItem('user_uuid');
+      const userId = localStorage.getItem("user_uuid");
       if (userId) {
         try {
           this.user = await this.usersService.fetchUser(userId);
           this.isAuthenticated = !!this.user;
         } catch (error) {
-          console.error('AppComponent - Error loading user:', error);
+          console.error("AppComponent - Error loading user:", error);
           this.authService.logout();
           this.isAuthenticated = false;
           this.user = null;

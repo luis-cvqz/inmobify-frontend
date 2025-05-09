@@ -4,6 +4,7 @@ import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { DashboardComponent } from "./user-dashboard/dashboard/dashboard.component";
 import { PropertyDetailComponent } from "./property-detail/property-detail.component";
+import { PublishPropertyComponent } from "./publish-property/publish-property.component";
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
   {
     path: "property-detail/:id",
     component: PropertyDetailComponent,
+  },
+  {
+    path: "publish-property",
+    component: PublishPropertyComponent,
   },
 ];
 export default routes;
