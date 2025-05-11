@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as CryptoJS from 'crypto-js';
 
 interface LoginResponse {
   id: string;
@@ -19,12 +20,18 @@ export class AuthService {
 
   async login(credentials: { email: string; password: string }): Promise<void> {
     try {
+      const hashedPassword = CryptoJS.SHA256(credentials.password).toString(CryptoJS.enc.Hex);
+      const credentialsToSend = {
+        email: credentials.email,
+        password: hashedPassword
+      }
+
       const response = await fetch(this.url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify(credentialsToSend),
       });
 
       if (!response.ok) {

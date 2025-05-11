@@ -46,7 +46,7 @@ export class LoginComponent {
       const userId = localStorage.getItem('user_uuid');
 
       if (userId) {
-        const user = await this.usersService.fetchUser(userId);
+        await this.usersService.fetchUser(userId);
         this.authStateService.notifyAuthChange();
         await this.router.navigate(['/']);
       } else {
