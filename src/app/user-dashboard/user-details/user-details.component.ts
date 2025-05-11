@@ -17,8 +17,6 @@ export class UserDetailsComponent {
     last_name: "",
     email: "",
     phone: "",
-    created_at: "",
-    user_type_id: 0,
   };
 
   constructor() {
