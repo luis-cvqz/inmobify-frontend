@@ -1,11 +1,12 @@
 import { Component, inject, Input } from "@angular/core";
-import {Observable, of, switchMap} from "rxjs";
+import { Observable, of, switchMap, tap } from "rxjs";
 import { PropertyDetails } from "../models/property-details";
 import { PropertiesService } from "../services/properties.service";
 import { environment } from "../../environments/environment";
 import { CommonModule } from "@angular/common";
-import {OwnerDetails} from '../models/owner-details';
-import {UsersService} from '../services/users.service';
+import { OwnerDetails } from "../models/owner-details";
+import { UsersService } from "../services/users.service";
+import { Image } from "../models/image";
 
 @Component({
   selector: "app-property-detail",
@@ -17,24 +18,49 @@ export class PropertyDetailComponent {
   private usersService = inject(UsersService);
   propertyDetails$: Observable<PropertyDetails> = of({} as PropertyDetails);
   ownerDetails$: Observable<OwnerDetails> = of({} as OwnerDetails);
+  images: Image[] = [];
+  currentIndex = 0;
 
   @Input()
   set id(propertyId: string) {
     if (propertyId) {
       this.propertyDetails$ =
         this.propertiesService.getPropertyDetails(propertyId);
+
+      this.propertiesService
+        .fetchImagesByProperty(propertyId)
+        .then((imageList: Image[]) => {
+          this.images = imageList;
+          this.currentIndex = 0;
+        });
+
       this.ownerDetails$ = this.propertyDetails$.pipe(
-        switchMap(details => {
+        switchMap((details) => {
           if (details.owner_id) {
             return this.usersService.getOwnerDetails(details.owner_id);
           }
           return of({} as OwnerDetails);
-        })
+        }),
       );
     } else {
+      this.images = [];
+      this.currentIndex = 0;
       this.propertyDetails$ = of({} as PropertyDetails);
       this.ownerDetails$ = of({} as OwnerDetails);
     }
+  }
+
+  prevImage(): void {
+    this.currentIndex =
+      (this.currentIndex - 1 + this.images.length) % this.images.length;
+  }
+
+  nextImage(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+  }
+
+  goToImage(index: number): void {
+    this.currentIndex = index;
   }
 
   map!: google.maps.Map;
