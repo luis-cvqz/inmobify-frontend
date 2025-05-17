@@ -11,7 +11,6 @@ import {UsersService} from '../services/users.service';
   selector: "app-property-detail",
   imports: [CommonModule],
   templateUrl: "./property-detail.component.html",
-  styleUrl: "./property-detail.component.css",
 })
 export class PropertyDetailComponent {
   private propertiesService = inject(PropertiesService);
@@ -40,8 +39,7 @@ export class PropertyDetailComponent {
 
   map!: google.maps.Map;
   marker!: google.maps.Marker;
-  pendingMarker: { lat: number; lng: number } | null = null; // Store marker coordinates if map isn't ready
-
+  pendingMarker: { lat: number; lng: number } | null = null;
   async ngOnInit(): Promise<void> {
     try {
       await this.loadGoogleMapsScript();

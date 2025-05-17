@@ -3,12 +3,12 @@ import { PropertiesService } from "../../services/properties.service";
 import { PropertyPreview } from "../../models/property-preview";
 import { CommonModule } from "@angular/common";
 import { Router, RouterModule } from "@angular/router";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-posts-summary",
   imports: [CommonModule, RouterModule],
   templateUrl: "./posts-summary.component.html",
-  styleUrl: "./posts-summary.component.css",
 })
 export class PostsSummaryComponent {
   properties: PropertyPreview[] = [];
@@ -38,9 +38,8 @@ export class PostsSummaryComponent {
     // call boost API
   }
 
-  onEdit(property: any) {
-    console.log("Edit clicked:", property);
-    // navigate to edit page or open modal
+  onEdit(property_id: any) {
+    this.router.navigate(["/update-property", property_id]);
   }
 
   async onDelete(property_id: string) {
@@ -49,12 +48,27 @@ export class PostsSummaryComponent {
     );
     if (!confirmation) return;
 
-    await this.propertiesService.deleteProperty(property_id);
-    await this.propertiesService.deletePropertyImagesDirectory(property_id);
-
-    const index = this.properties.findIndex((p) => p.id === property_id);
-    if (index !== -1) {
-      this.properties.splice(index, 1);
+    try {
+      await this.propertiesService.deleteProperty(property_id);
+      await this.propertiesService.deletePropertyImagesDirectory(property_id);
+      await this.propertiesService.deleteAllPropertyImages(property_id);
+      await Swal.fire({
+        icon: "success",
+        text: "Publicación eliminada correctamente",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#007bff",
+      });
+      const index = this.properties.findIndex((p) => p.id === property_id);
+      if (index !== -1) {
+        this.properties.splice(index, 1);
+      }
+    } catch {
+      await Swal.fire({
+        icon: "error",
+        text: "No se pudo eliminar la propiedad, inténtalo de nuevo más tarde",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#007bff",
+      });
     }
   }
 }

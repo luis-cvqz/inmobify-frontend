@@ -15,6 +15,5 @@ import { PostsSummaryComponent } from "../posts-summary/posts-summary.component"
     RouterModule,
   ],
   templateUrl: "./dashboard.component.html",
-  styleUrl: "./dashboard.component.css",
 })
 export class DashboardComponent {}
