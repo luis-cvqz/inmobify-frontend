@@ -16,8 +16,11 @@ export interface PropertyDetails {
   zip_code: string;
   city: string;
   state: string;
+  state_id: number;
   latitude: string;
   longitude: string;
   property_type: string;
+  property_type_id: number;
   disposition: string;
+  disposition_type_id: number;
 }

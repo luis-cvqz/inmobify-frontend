@@ -8,12 +8,13 @@ import { PropertiesService } from "../services/properties.service";
 import { NewProperty } from "../models/new-property";
 import { Router, RouterModule } from "@angular/router";
 import { State } from "../models/state";
+import Swal from "sweetalert2";
+import { NewImage } from "../models/new-image";
 
 @Component({
   selector: "app-publish-property",
   imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: "./publish-property.component.html",
-  styleUrl: "./publish-property.component.css",
 })
 export class PublishPropertyComponent {
   constructor(private router: Router) {}
@@ -41,7 +42,7 @@ export class PublishPropertyComponent {
     property_type_id: 1,
   };
 
-  onFilesSelected(event: Event) {
+  async onFilesSelected(event: Event) {
     const input = event.target as HTMLInputElement;
 
     if (input.files) {
@@ -50,12 +51,16 @@ export class PublishPropertyComponent {
       const combinedFiles = [...this.formData.images, ...newFiles];
 
       if (combinedFiles.length > 10) {
-        alert("Solo puedes subir hasta 10 imágenes.");
+        await Swal.fire({
+          icon: "info",
+          text: "Solo puedes subir un máximo de 10 imágenes",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#007bff",
+        });
         return;
       }
 
       this.formData.images = combinedFiles;
-      console.log(this.formData.images);
     }
   }
 
@@ -85,13 +90,24 @@ export class PublishPropertyComponent {
       localStorage.getItem("user_uuid") === "" ||
       localStorage.getItem("user_uuid") === undefined
     ) {
-      alert("Debes estar logueado para publicar una propiedad.");
+      await Swal.fire({
+        icon: "warning",
+        text: "Debes iniciar sesión para hacer una publicación",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#007bff",
+      });
       this.submitting = false;
       return;
     }
 
     if (!this.isFormValid()) {
       this.submitting = false;
+      await Swal.fire({
+        icon: "warning",
+        text: "Por favor, completa todos los campos, sube al menos una imagen y selecciona la ubicación en el mapa",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#007bff",
+      });
       return;
     }
 
@@ -110,10 +126,26 @@ export class PublishPropertyComponent {
         `${this.fileServerUrl}/images/${propertyId}/${this.formData.images[0].name}`,
       );
 
-      alert("Propiedad publicada exitosamente!");
+      let imagesInfo = this.createImagesInfo(propertyId, this.formData.images);
+      await this.propertiesService.insertImagesByProperty(
+        propertyId,
+        imagesInfo,
+      );
+
+      await Swal.fire({
+        icon: "success",
+        text: "¡Tu propiedad ha sido publicada!",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#007bff",
+      });
       this.router.navigate([""]);
     } catch (error) {
-      console.error("Error creating property:", error);
+      await Swal.fire({
+        icon: "error",
+        text: "No se pudo establecer conexión con el servidor, inténtalo de nuevo más tarde",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#007bff",
+      });
       return;
     } finally {
       this.submitting = false;
@@ -128,7 +160,7 @@ export class PublishPropertyComponent {
       sqm: Number(this.formData.size),
       neighborhood: this.formData.neighborhood,
       image_path: "",
-      disposition_type_id: this.formData.disposition_type_id,
+      disposition_type_id: Number(this.formData.disposition_type_id),
       street: this.formData.address,
       city_name: this.formData.city_name,
       state_id: this.formData.state_id,
@@ -140,7 +172,7 @@ export class PublishPropertyComponent {
       priority: 0,
       owner_id: localStorage.getItem("user_uuid") || "",
       house_number: this.formData.house_number,
-      property_type_id: this.formData.property_type_id,
+      property_type_id: Number(this.formData.property_type_id),
     };
 
     return property;
@@ -164,12 +196,16 @@ export class PublishPropertyComponent {
       this.formData.images.length === 0 ||
       this.formData.property_type_id === 0
     ) {
-      alert(
-        "Por favor, completa todos los campos, sube al menos una imagen y selecciona la ubicación en el mapa.",
-      );
       return false;
     }
     return true;
+  }
+
+  createImagesInfo(propertyId: string, files: File[]): NewImage[] {
+    return files.map((file) => ({
+      path: `${this.fileServerUrl}/images/${propertyId}/${file.name}`,
+      name: file.name,
+    }));
   }
 
   map!: google.maps.Map;
