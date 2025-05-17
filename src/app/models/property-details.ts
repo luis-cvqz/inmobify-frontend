@@ -10,6 +10,7 @@ export interface PropertyDetails {
   street: string;
   owner_id: string;
   created_at: string;
+  modified_at: string;
   house_number: string;
   neighborhood: string;
   zip_code: string;

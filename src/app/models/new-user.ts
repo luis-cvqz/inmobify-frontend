@@ -4,5 +4,4 @@ export interface NewUser {
   email: string;
   phone: string;
   password: string;
-  user_type_id: number;
 }

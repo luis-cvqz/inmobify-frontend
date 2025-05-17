@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { UsersService } from '../services/users.service';
 import { NewUser } from '../models/new-user';
 import Swal from 'sweetalert2';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-register',
@@ -33,7 +34,6 @@ export class RegisterComponent {
   async onSubmit() {
     this.errorMessage = '';
 
-    // Validación del lado del cliente
     if (!this.name || !this.last_name || !this.email || !this.phone || !this.password || !this.confirmPassword) {
       this.errorMessage = 'Por favor, completa todos los campos.';
       return;
@@ -44,13 +44,14 @@ export class RegisterComponent {
       return;
     }
 
+    const hashedPassword = CryptoJS.SHA256(this.password).toString(CryptoJS.enc.Hex);
+
     const userData: NewUser = {
       name: this.name,
       last_name: this.last_name,
       email: this.email,
       phone: this.phone,
-      password: this.password,
-      user_type_id: 1
+      password: hashedPassword
     };
 
     try {

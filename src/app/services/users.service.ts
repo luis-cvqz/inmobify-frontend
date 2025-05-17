@@ -49,7 +49,6 @@ export class UsersService {
       throw new Error(`HTTP error status: ${response.status}`);
     }
 
-    const user = await response.json();
-    return user;
+    return await response.json();
   }
 }
