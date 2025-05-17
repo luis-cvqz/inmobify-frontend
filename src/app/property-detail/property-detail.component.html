@@ -45,6 +45,15 @@
             {{ propertyDetails.city }}, {{ propertyDetails.state }}
           </span>
         </div>
+        <div class="flex items-center gap-2">
+          <i
+            class="text-xl fa-solid fa-regular fa-clock dark:text-gray-200"
+          ></i>
+          <span class="dark:text-gray-200">
+            Fecha de publicación:
+            {{ propertyDetails.created_at | date: "dd/MMM/yyyy HH:mm" }}
+          </span>
+        </div>
       </div>
 
       <!-- Description -->
@@ -69,7 +78,10 @@
       <hr class="my-6 border-t border-gray-300" />
       <p class="text-center font-bold">Información de propietario</p>
       <div *ngIf="ownerDetails$ | async as ownerDetails">
-        <p *ngIf="ownerDetails.name || ownerDetails.last_name" class="mt-2 dark:text-gray-200">
+        <p
+          *ngIf="ownerDetails.name || ownerDetails.last_name"
+          class="mt-2 dark:text-gray-200"
+        >
           {{ ownerDetails.name }} {{ ownerDetails.last_name }}
         </p>
         <div *ngIf="ownerDetails.email" class="flex items-center gap-2 mt-2">
@@ -80,7 +92,12 @@
           <i class="fa-solid fa-phone text-xl dark:text-gray-200"></i>
           <span class="dark:text-gray-200">{{ ownerDetails.phone }}</span>
         </div>
-        <p *ngIf="!ownerDetails.name && !ownerDetails.email && !ownerDetails.phone" class="mt-2 dark:text-gray-200 text-center">
+        <p
+          *ngIf="
+            !ownerDetails.name && !ownerDetails.email && !ownerDetails.phone
+          "
+          class="mt-2 dark:text-gray-200 text-center"
+        >
           No hay datos disponibles
         </p>
       </div>
