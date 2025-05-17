@@ -1,9 +1,11 @@
 import { Component, inject, Input } from "@angular/core";
-import { Observable, of } from "rxjs";
+import {Observable, of, switchMap} from "rxjs";
 import { PropertyDetails } from "../models/property-details";
 import { PropertiesService } from "../services/properties.service";
 import { environment } from "../../environments/environment";
 import { CommonModule } from "@angular/common";
+import {OwnerDetails} from '../models/owner-details';
+import {UsersService} from '../services/users.service';
 
 @Component({
   selector: "app-property-detail",
@@ -13,15 +15,26 @@ import { CommonModule } from "@angular/common";
 })
 export class PropertyDetailComponent {
   private propertiesService = inject(PropertiesService);
+  private usersService = inject(UsersService);
   propertyDetails$: Observable<PropertyDetails> = of({} as PropertyDetails);
+  ownerDetails$: Observable<OwnerDetails> = of({} as OwnerDetails);
 
   @Input()
   set id(propertyId: string) {
     if (propertyId) {
       this.propertyDetails$ =
         this.propertiesService.getPropertyDetails(propertyId);
+      this.ownerDetails$ = this.propertyDetails$.pipe(
+        switchMap(details => {
+          if (details.owner_id) {
+            return this.usersService.getOwnerDetails(details.owner_id);
+          }
+          return of({} as OwnerDetails);
+        })
+      );
     } else {
       this.propertyDetails$ = of({} as PropertyDetails);
+      this.ownerDetails$ = of({} as OwnerDetails);
     }
   }
 
