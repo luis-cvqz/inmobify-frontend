@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { UserNoPass } from '../models/user-no-pass';
 import { NewUser } from '../models/new-user';
+import {OwnerDetails} from '../models/owner-details';
+import {catchError, map, Observable, of} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  private url = 'http://localhost:12000/imf-users/users';
+  private usersUrl = 'http://localhost:12000/imf-users/users';
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   async register(userData: NewUser): Promise<string> {
     try {
-      const response = await fetch(this.url, {
+      const response = await fetch(this.usersUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -38,7 +41,7 @@ export class UsersService {
 
   async fetchUser(userId: string): Promise<UserNoPass> {
     const token = localStorage.getItem('jwt_token') || '';
-    const response = await fetch(`${this.url}/${userId}`, {
+    const response = await fetch(`${this.usersUrl}/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -51,4 +54,17 @@ export class UsersService {
 
     return await response.json();
   }
+
+  getOwnerDetails(userId: string): Observable<OwnerDetails> {
+    return this.http.
+      get<OwnerDetails>(`${this.usersUrl}/${userId}`).
+      pipe(map((data) => data ?? {}),
+      catchError(error => {
+        console.error(`Error fetching owner details`, error);
+        return of({} as OwnerDetails);
+      })
+    );
+  }
 }
+
+
