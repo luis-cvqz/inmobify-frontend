@@ -1,12 +1,16 @@
 import { Component, inject, Input } from "@angular/core";
-import { Observable, of, switchMap, tap } from "rxjs";
+import { firstValueFrom, Observable, of, switchMap, tap } from "rxjs";
 import { PropertyDetails } from "../models/property-details";
 import { PropertiesService } from "../services/properties.service";
 import { environment } from "../../environments/environment";
 import { CommonModule } from "@angular/common";
-import { OwnerDetails } from "../models/owner-details";
-import { UsersService } from "../services/users.service";
+import {OwnerDetails} from '../models/owner-details';
+import {UsersService} from '../services/users.service';
+import {AppointmentsService} from '../services/appointments.service';
+import {UserNoPass} from '../models/user-no-pass';
+import {NewProspect} from '../models/new-prospect';
 import { Image } from "../models/image";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: "app-property-detail",
@@ -16,6 +20,7 @@ import { Image } from "../models/image";
 export class PropertyDetailComponent {
   private propertiesService = inject(PropertiesService);
   private usersService = inject(UsersService);
+  private appointmentsService = inject(AppointmentsService);
   propertyDetails$: Observable<PropertyDetails> = of({} as PropertyDetails);
   ownerDetails$: Observable<OwnerDetails> = of({} as OwnerDetails);
   images: Image[] = [];
@@ -155,5 +160,68 @@ export class PropertyDetailComponent {
     }
     this.map.setCenter(position);
     this.map.setZoom(14);
+  }
+
+  async onContact(): Promise<void> {
+    const userId = localStorage.getItem('user_uuid');
+    const token = localStorage.getItem('jwt_token');
+
+    if (!userId || userId === '' || !token || token === '') {
+      await Swal.fire({
+        icon: 'warning',
+        title: '¡Aviso!',
+        text: 'Debes inicar sesión para contactar al propietario.',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#007bff'
+      });
+      return;
+    }
+
+    try {
+      const user: UserNoPass = await this.usersService.fetchUser(userId);
+      const propertyDetails = await firstValueFrom(this.propertyDetails$);
+      const ownerDetails = await firstValueFrom(this.ownerDetails$);
+
+      if (!propertyDetails?.id || !ownerDetails?.id) {
+        await Swal.fire({
+          icon: 'error',
+          title: '¡Error!',
+          text: 'Sucedió un error al crear la solicitud de contacto',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#007bff'
+        });
+        return;
+      }
+
+      const prospect: NewProspect = {
+        name: user.name,
+        last_name: user.last_name,
+        email: user.email,
+        phone: user.phone,
+        property_id: propertyDetails.id,
+        owner_id: ownerDetails.id,
+      };
+
+      const prospectId: string = await this.appointmentsService.postProspect(prospect);
+
+      await Swal.fire({
+        icon: 'success',
+        title: '¡Solicitud enviada!',
+        text: 'Tu solicitud de contacto se ha enviado exitosamente',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#007bff'
+      });
+
+    } catch (error) {
+      console.error("Error creating prospect:", error);
+      await Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'Ocurrió un error al procesa la solicitud',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#007bff'
+      });
+      return;
+    }
   }
 }
