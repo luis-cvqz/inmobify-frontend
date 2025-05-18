@@ -1,0 +1,38 @@
+<div
+  class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 w-96 z-50"
+>
+  <h2 class="text-xl font-semibold mb-4 dark:text-white">
+    Paso {{ currentStepIndex + 1 }} de {{ steps.length }}
+  </h2>
+
+  <div *ngIf="steps && steps.length > 0">
+    <ng-container
+      *ngComponentOutlet="steps[currentStepIndex].component"
+    ></ng-container>
+  </div>
+  <div *ngIf="steps.length === 0">
+    <p class="dark:text-white">No hay pasos definidos.</p>
+  </div>
+
+  <div class="flex justify-end gap-4 mt-6">
+    <button
+      *ngIf="currentStepIndex > 0"
+      (click)="previousStep()"
+      class="bg-gray-300 cursor-pointer hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    >
+      Regresar
+    </button>
+    <button
+      (click)="nextStep()"
+      class="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    >
+      {{ currentStepIndex === steps.length - 1 ? "Terminar" : "Continuar" }}
+    </button>
+  </div>
+</div>
+
+<div
+  class="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-40"
+  (click)="closeCard()"
+  *ngIf="showBackdrop"
+></div>
