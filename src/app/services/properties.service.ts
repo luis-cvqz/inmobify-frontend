@@ -5,6 +5,8 @@ import { firstValueFrom, map, Observable } from "rxjs";
 import { PropertyDetails } from "../models/property-details";
 import { HttpClient } from "@angular/common/http";
 import { PropertyPreview } from "../models/property-preview";
+import { Image } from "../models/image";
+import { NewImage } from "../models/new-image";
 
 @Injectable({
   providedIn: "root",
@@ -61,21 +63,45 @@ export class PropertiesService {
     }
   }
 
-  async updateImagePath(id: string, img_path: string): Promise<any> {
+  async updateImagePath(id: string, image_path: string): Promise<any> {
     return await firstValueFrom(
       this.http.put(`${this.propertiesUrl}/property-img-path/${id}`, {
-        img_path,
+        image_path,
       }),
     );
   }
 
-  async deletePropertyImage(
+  async fetchImagesByProperty(id: string): Promise<Image[]> {
+    const data = await fetch(`${this.propertiesUrl}/property-images/${id}`);
+    return (await data.json()) ?? [];
+  }
+
+  async insertImagesByProperty(id: string, images: NewImage[]): Promise<any> {
+    return await firstValueFrom(
+      this.http.post(`${this.propertiesUrl}/property-images/${id}`, images),
+    );
+  }
+
+  async deleteAllPropertyImages(id: string): Promise<any> {
+    return await firstValueFrom(
+      this.http.delete(`${this.propertiesUrl}/property-images/${id}`),
+    );
+  }
+
+  async deletePropertyImageDatabase(image_uuid: string): Promise<any> {
+    return await firstValueFrom(
+      this.http.delete(`${this.propertiesUrl}/image/${image_uuid}`),
+    );
+  }
+
+  async deletePropertyImageFileServer(
     property_uuid: string,
     fileName: string,
   ): Promise<any> {
     return await firstValueFrom(
-      this.http.delete(
-        `${this.fileServerUrl}/imf-files/file/${property_uuid}`,
+      this.http.request(
+        "DELETE",
+        `${this.fileServerUrl}/file/${property_uuid}`,
         {
           body: { filename: fileName },
         },
@@ -92,6 +118,12 @@ export class PropertiesService {
   async postProperty(newProperty: NewProperty): Promise<any> {
     return firstValueFrom(
       this.http.post(`${this.propertiesUrl}/property`, newProperty),
+    );
+  }
+
+  async updateProperty(id: string, updatedProperty: NewProperty): Promise<any> {
+    return await firstValueFrom(
+      this.http.put(`${this.propertiesUrl}/property/${id}`, updatedProperty),
     );
   }
 

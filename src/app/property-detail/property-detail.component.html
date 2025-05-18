@@ -1,11 +1,48 @@
 <section
-  class="max-w-6xl mx-auto p-6"
+  class="max-w-6xl mx-auto p-6 overflow-hidden"
   *ngIf="propertyDetails$ | async as propertyDetails"
 >
-  <img
-    [src]="propertyDetails.image_path"
-    class="rounded-xl object-cover w-full h-96"
-  />
+  <div class="relative">
+    <!-- Carousel Container -->
+    <div
+      class="flex rounded-xl h-96 transition-transform"
+      [style.transform]="'translateX(' + -currentIndex * 100 + '%)'"
+    >
+      <div *ngFor="let image of images" class="w-full flex-shrink-0">
+        <img
+          [src]="image.path"
+          alt="{{ image.name }}"
+          class="object-cover w-full h-96"
+        />
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <button
+      class="cursor-pointer absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+      (click)="prevImage()"
+    >
+      &#8249;
+    </button>
+
+    <button
+      class="cursor-pointer absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+      (click)="nextImage()"
+    >
+      &#8250;
+    </button>
+  </div>
+
+  <!-- Indicators -->
+  <div class="flex justify-center gap-2 mt-4">
+    <button
+      *ngFor="let _ of images; let i = index"
+      (click)="goToImage(i)"
+      [class.bg-gray-800]="i === currentIndex"
+      class="w-3 h-3 rounded-full bg-gray-400"
+    ></button>
+  </div>
+
   <h1 class="text-3xl m-5 mb-3 font-bold dark:text-gray-200">
     {{ propertyDetails.title }}
   </h1>
@@ -45,6 +82,15 @@
             {{ propertyDetails.city }}, {{ propertyDetails.state }}
           </span>
         </div>
+        <div class="flex items-center gap-2">
+          <i
+            class="text-xl fa-solid fa-regular fa-clock dark:text-gray-200"
+          ></i>
+          <span class="dark:text-gray-200">
+            Fecha de publicación:
+            {{ propertyDetails.created_at | date: "dd/MMM/yyyy HH:mm" }}
+          </span>
+        </div>
       </div>
 
       <!-- Description -->
@@ -69,7 +115,10 @@
       <hr class="my-6 border-t border-gray-300" />
       <p class="text-center font-bold">Información de propietario</p>
       <div *ngIf="ownerDetails$ | async as ownerDetails">
-        <p *ngIf="ownerDetails.name || ownerDetails.last_name" class="mt-2 dark:text-gray-200">
+        <p
+          *ngIf="ownerDetails.name || ownerDetails.last_name"
+          class="mt-2 dark:text-gray-200"
+        >
           {{ ownerDetails.name }} {{ ownerDetails.last_name }}
         </p>
         <div *ngIf="ownerDetails.email" class="flex items-center gap-2 mt-2">
@@ -80,7 +129,12 @@
           <i class="fa-solid fa-phone text-xl dark:text-gray-200"></i>
           <span class="dark:text-gray-200">{{ ownerDetails.phone }}</span>
         </div>
-        <p *ngIf="!ownerDetails.name && !ownerDetails.email && !ownerDetails.phone" class="mt-2 dark:text-gray-200 text-center">
+        <p
+          *ngIf="
+            !ownerDetails.name && !ownerDetails.email && !ownerDetails.phone
+          "
+          class="mt-2 dark:text-gray-200 text-center"
+        >
           No hay datos disponibles
         </p>
       </div>

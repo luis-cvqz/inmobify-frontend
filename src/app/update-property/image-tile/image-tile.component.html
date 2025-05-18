@@ -1,0 +1,24 @@
+<div class="flex gap-3 text-center mb-3 mt-3 items-center">
+  <button
+    type="button"
+    (click)="onSetMainPicture()"
+    class="flex items-center dark:text-white"
+    [ngClass]="{
+      'text-yellow-400': mainImageRoute === imageInfo.path,
+      'text-gray-400 hover:text-gray-700 cursor-pointer':
+        mainImageRoute !== imageInfo.path,
+    }"
+    [disabled]="mainImageRoute === imageInfo.path"
+  >
+    <i class="fa-solid fa-star"></i>
+  </button>
+  <img [src]="imageInfo.path" class="max-h-28 max-w-48" />
+  <p class="dark:text-white">{{ imageInfo.name }}</p>
+  <button
+    type="button"
+    (click)="onImageDelete()"
+    class="text-red-600 hover:text-red-800 cursor-pointer flex items-center"
+  >
+    <i class="fas fa-trash-alt"></i>
+  </button>
+</div>

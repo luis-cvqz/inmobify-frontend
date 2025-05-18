@@ -1,5 +1,5 @@
 import { Component, inject, Input } from "@angular/core";
-import {firstValueFrom, Observable, of, switchMap} from "rxjs";
+import { firstValueFrom, Observable, of, switchMap, tap } from "rxjs";
 import { PropertyDetails } from "../models/property-details";
 import { PropertiesService } from "../services/properties.service";
 import { environment } from "../../environments/environment";
@@ -9,13 +9,13 @@ import {UsersService} from '../services/users.service';
 import {AppointmentsService} from '../services/appointments.service';
 import {UserNoPass} from '../models/user-no-pass';
 import {NewProspect} from '../models/new-prospect';
+import { Image } from "../models/image";
 import Swal from 'sweetalert2';
 
 @Component({
   selector: "app-property-detail",
   imports: [CommonModule],
   templateUrl: "./property-detail.component.html",
-  styleUrl: "./property-detail.component.css",
 })
 export class PropertyDetailComponent {
   private propertiesService = inject(PropertiesService);
@@ -23,30 +23,54 @@ export class PropertyDetailComponent {
   private appointmentsService = inject(AppointmentsService);
   propertyDetails$: Observable<PropertyDetails> = of({} as PropertyDetails);
   ownerDetails$: Observable<OwnerDetails> = of({} as OwnerDetails);
+  images: Image[] = [];
+  currentIndex = 0;
 
   @Input()
   set id(propertyId: string) {
     if (propertyId) {
       this.propertyDetails$ =
         this.propertiesService.getPropertyDetails(propertyId);
+
+      this.propertiesService
+        .fetchImagesByProperty(propertyId)
+        .then((imageList: Image[]) => {
+          this.images = imageList;
+          this.currentIndex = 0;
+        });
+
       this.ownerDetails$ = this.propertyDetails$.pipe(
-        switchMap(details => {
+        switchMap((details) => {
           if (details.owner_id) {
             return this.usersService.getOwnerDetails(details.owner_id);
           }
           return of({} as OwnerDetails);
-        })
+        }),
       );
     } else {
+      this.images = [];
+      this.currentIndex = 0;
       this.propertyDetails$ = of({} as PropertyDetails);
       this.ownerDetails$ = of({} as OwnerDetails);
     }
   }
 
+  prevImage(): void {
+    this.currentIndex =
+      (this.currentIndex - 1 + this.images.length) % this.images.length;
+  }
+
+  nextImage(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+  }
+
+  goToImage(index: number): void {
+    this.currentIndex = index;
+  }
+
   map!: google.maps.Map;
   marker!: google.maps.Marker;
-  pendingMarker: { lat: number; lng: number } | null = null; // Store marker coordinates if map isn't ready
-
+  pendingMarker: { lat: number; lng: number } | null = null;
   async ngOnInit(): Promise<void> {
     try {
       await this.loadGoogleMapsScript();
