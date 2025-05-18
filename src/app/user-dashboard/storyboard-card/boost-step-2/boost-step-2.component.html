@@ -1,0 +1,100 @@
+<div class="rounded-2xl space-y-4">
+  <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">
+    Información de pago
+  </h2>
+
+  <div class="space-y-2">
+    <label
+      for="cardholder-name"
+      class="dark:text-white block text-sm font-medium text-gray-700"
+      >Nombre del titular</label
+    >
+    <input
+      type="text"
+      id="cardholder-name"
+      name="cardholder-name"
+      placeholder="Martín Carmona"
+      required
+      class="mt-1 dark:text-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+    />
+  </div>
+
+  <div class="space-y-2">
+    <label
+      for="card-number"
+      class="dark:text-white block text-sm font-medium text-gray-700"
+      >Número de tarjeta</label
+    >
+    <input
+      type="text"
+      id="card-number"
+      name="card-number"
+      maxlength="16"
+      placeholder="XXXX XXXX XXXX XXXX"
+      required
+      class="dark:text-gray-400 mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+      inputmode="numeric"
+      pattern="[0-9\s]+"
+    />
+    <p class="text-xs text-gray-500 dark:text-gray-300">
+      Utiliza un número de tarjeta válido.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div class="space-y-2">
+      <label
+        for="expiration-date"
+        class="dark:text-white block text-sm font-medium text-gray-700"
+        >Fecha de expiración</label
+      >
+      <input
+        type="text"
+        id="expiration-date"
+        name="expiration-date"
+        placeholder="MM/AAAA"
+        required
+        class="dark:text-gray-400 mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        pattern="(0[1-9]|1[0-2])\/[0-9]{4}"
+      />
+      <p class="text-xs text-gray-500 dark:text-gray-300">Formato: MM/AAAA</p>
+    </div>
+    <div class="space-y-2">
+      <label
+        for="cvv"
+        class="dark:text-white block text-sm font-medium text-gray-700"
+        >CVV</label
+      >
+      <input
+        type="text"
+        id="cvv"
+        name="cvv"
+        placeholder="CVV"
+        required
+        class="dark:text-gray-400 mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        maxlength="4"
+        inputmode="numeric"
+        pattern="[0-9]{3,4}"
+      />
+      <p class="text-xs text-gray-500 dark:text-gray-300">3 o 4 digitos</p>
+    </div>
+  </div>
+
+  <div class="space-y-2">
+    <label
+      for="billing-postal-code"
+      class="dark:text-white block text-sm font-medium text-gray-700"
+    >
+      Código postal
+    </label>
+    <input
+      type="text"
+      id="billing-postal-code"
+      name="billing-postal-code"
+      placeholder="XXXXX"
+      required
+      class="dark:text-gray-400 mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+      maxlength="10"
+    />
+  </div>
+</div>

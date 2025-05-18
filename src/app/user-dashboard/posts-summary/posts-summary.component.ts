@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { PropertiesService } from "../../services/properties.service";
 import { PropertyPreview } from "../../models/property-preview";
 import { CommonModule } from "@angular/common";
@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 export class PostsSummaryComponent {
   properties: PropertyPreview[] = [];
   userId = localStorage.getItem("user_uuid")!;
+  @Output() boost = new EventEmitter<any>();
 
   constructor(
     private propertiesService: PropertiesService,
@@ -33,9 +34,8 @@ export class PostsSummaryComponent {
     this.router.navigate(["/property-detail", propertyId]);
   }
 
-  onBoost(property: any) {
-    console.log("Boost clicked:", property);
-    // call boost API
+  onBoost(propertyId: any) {
+    this.boost.emit(propertyId);
   }
 
   onEdit(property_id: any) {
