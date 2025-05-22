@@ -18,8 +18,8 @@ export class PropertiesService {
 
   constructor(private http: HttpClient) {}
 
-  async getBoostedProperties(): Promise<PropertySummary[]> {
-    const data = await fetch(`${this.propertiesUrl}/boosted-properties`);
+  async getProperties(): Promise<PropertySummary[]> {
+    const data = await fetch(`${this.propertiesUrl}/properties`);
     return (await data.json()) ?? [];
   }
 
