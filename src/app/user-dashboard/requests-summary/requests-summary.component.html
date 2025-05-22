@@ -1,1 +1,34 @@
-<p class="text-gray-600">No hay nada para mostrar en este momento.</p>
+<ng-container *ngIf="userId && prospects.length > 0; else notAvailable">
+  <div class="overflow-x-auto">
+    <table class="min-w-full border-collapse border border-gray-300">
+      <thead class="bg-gray-200">
+      <tr>
+        <th class="px-4 py-2 text-left font-semibold text-gray-900 border-b border-gray-300">
+          Datos del interesado
+        </th>
+        <th class="px-4 py-2 text-left font-semibold text-gray-900 border-b border-gray-300">
+          Propiedad
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let prospect of prospects" class="even:bg-gray-50 hover:bg-gray-100">
+        <td class="px-4 py-2 border-b border-gray-300 text-gray-700">
+          <div class="flex flex-col">
+            <span class="font-medium">{{ prospect.name }} {{ prospect.last_name }}</span>
+            <span>{{ prospect.email }}</span>
+            <span>{{ prospect.phone }}</span>
+          </div>
+        </td>
+        <td class="px-4 py-2 border-b border-gray-300 text-gray-700">
+          {{ prospect.property_id }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+<ng-template #notAvailable>
+  <p class="text-gray-600">No hay solicitudes para mostrar en este momento.</p>
+</ng-template>
