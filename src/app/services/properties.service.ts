@@ -3,7 +3,7 @@ import { PropertySummary } from "../models/property-summary";
 import { NewProperty } from "../models/new-property";
 import { firstValueFrom, map, Observable } from "rxjs";
 import { PropertyDetails } from "../models/property-details";
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { PropertyPreview } from "../models/property-preview";
 import { Image } from "../models/image";
 import { NewImage } from "../models/new-image";
@@ -34,6 +34,18 @@ export class PropertiesService {
   getPropertyDetails(id: string): Observable<PropertyDetails> {
     return this.http
       .get<PropertyDetails>(`${this.propertiesUrl}/property/${id}`)
+      .pipe(map((data) => data ?? {}));
+  }
+
+  getPropertyPreview(id: string): Observable<PropertyPreview> {
+    const token = localStorage.getItem("jwt_token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(token ? {Authorization: `Bearer ${token}`} : {})
+    })
+
+    return this.http
+      .get<PropertyPreview>(`${this.propertiesUrl}/user-property-preview/${id}`, {headers})
       .pipe(map((data) => data ?? {}));
   }
 

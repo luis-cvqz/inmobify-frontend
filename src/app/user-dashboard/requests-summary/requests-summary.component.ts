@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AppointmentsService} from '../../services/appointments.service';
 import {ProspectSummary} from '../../models/prospect-summary';
+import {PropertiesService} from '../../services/properties.service';
+import {forkJoin, Observable} from 'rxjs';
+import {PropertyPreview} from '../../models/property-preview';
 
 @Component({
   selector: 'app-requests-summary',
@@ -13,6 +16,7 @@ import {ProspectSummary} from '../../models/prospect-summary';
 })
 export class RequestsSummaryComponent implements OnInit {
   prospects: ProspectSummary[] = [];
+  propertyPreviews: Map<string, PropertyPreview> = new Map();
   userId = localStorage.getItem('user_uuid') || '';
   currentPage = 1;
   pageSize = 3;
@@ -36,6 +40,7 @@ export class RequestsSummaryComponent implements OnInit {
 
   constructor(
     private appointmentsService: AppointmentsService,
+    private propertiesService: PropertiesService,
     private router: Router
   ) {}
 
@@ -43,11 +48,38 @@ export class RequestsSummaryComponent implements OnInit {
     try {
       if (this.userId) {
         this.prospects = await this.appointmentsService.getProspectsByUserId(this.userId);
+        await this.loadPropertyPreviews();
       }
     } catch (err) {
       console.error('Error loading prospects:', err);
       this.prospects = [];
+      this.propertyPreviews.clear();
     }
+  }
+
+  private async loadPropertyPreviews() {
+    if (this.prospects.length === 0) return;
+
+    const propertyIds = [...new Set(this.prospects.map(p => p.property_id))];
+    const previewObservables: Observable<PropertyPreview>[] = propertyIds.map
+    (id =>
+      this.propertiesService.getPropertyPreview(id)
+    );
+
+    try {
+      const previews = await forkJoin(previewObservables).toPromise();
+      previews?.forEach((preview, index) => {
+        if (preview && preview.id) {
+          this.propertyPreviews.set(propertyIds[index], preview);
+        }
+      });
+    } catch (err) {
+      console.error('Error loading property previews:', err);
+    }
+  }
+
+  getPropertyPreview(propertyId: string): PropertyPreview {
+    return this.propertyPreviews.get(propertyId) || { id: propertyId, title: 'N/A', location: 'N/A' };
   }
 
   previousPage() {
