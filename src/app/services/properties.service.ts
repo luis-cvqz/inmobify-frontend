@@ -7,6 +7,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { PropertyPreview } from "../models/property-preview";
 import { Image } from "../models/image";
 import { NewImage } from "../models/new-image";
+import { UpdatePropertyPriority } from "../models/update-property-priority";
 
 @Injectable({
   providedIn: "root",
@@ -17,8 +18,8 @@ export class PropertiesService {
 
   constructor(private http: HttpClient) {}
 
-  async getBoostedProperties(): Promise<PropertySummary[]> {
-    const data = await fetch(`${this.propertiesUrl}/boosted-properties`);
+  async getProperties(): Promise<PropertySummary[]> {
+    const data = await fetch(`${this.propertiesUrl}/properties`);
     return (await data.json()) ?? [];
   }
 
@@ -136,6 +137,12 @@ export class PropertiesService {
   async updateProperty(id: string, updatedProperty: NewProperty): Promise<any> {
     return await firstValueFrom(
       this.http.put(`${this.propertiesUrl}/property/${id}`, updatedProperty),
+    );
+  }
+
+  async updatePropertyPriority(id: string, priority: UpdatePropertyPriority) {
+    return await firstValueFrom(
+      this.http.put(`${this.propertiesUrl}/property-priority/${id}`, priority),
     );
   }
 

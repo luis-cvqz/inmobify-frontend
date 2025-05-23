@@ -32,7 +32,7 @@ export class HomeComponent {
 
   constructor() {
     this.propertiesService
-      .getBoostedProperties()
+      .getProperties()
       .then((propertyList: PropertySummary[]) => {
         this.propertyList = propertyList;
       });
