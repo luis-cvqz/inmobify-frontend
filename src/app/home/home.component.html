@@ -43,29 +43,46 @@
 </section>
 
 <!-- Filter Options -->
-<section class="flex justify-center m-8">
-  <ul class="flex gap-6 text-gray-700">
-    <li
-      class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium"
-    >
-      Todos
-    </li>
-    <li
-      class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium"
-    >
-      Casas
-    </li>
-    <li
-      class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium"
-    >
-      Departamentos
-    </li>
-    <li
-      class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium"
-    >
-      Locales comerciales
-    </li>
-  </ul>
+<section class="w-full mx-auto px-4 my-8">
+  <div class="flex justify-center">
+    <ul class="inline-flex gap-4 text-gray-700 flex-nowrap min-w-max">
+      <li
+        class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium whitespace-nowrap px-2 py-1 text-base"
+        [class.text-blue-600]="selectedFilter === 'Todos'"
+        (click)="changeFilter('Todos')"
+      >
+        Todos
+      </li>
+      <li
+        class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium whitespace-nowrap px-2 py-1 text-base"
+        [class.text-blue-600]="selectedFilter === 'Residencias (Venta)'"
+        (click)="changeFilter('Residencias (Venta)')"
+      >
+        Residencias (Venta)
+      </li>
+      <li
+        class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium whitespace-nowrap px-2 py-1 text-base"
+        [class.text-blue-600]="selectedFilter === 'Residencias (Renta)'"
+        (click)="changeFilter('Residencias (Renta)')"
+      >
+        Residencias (Renta)
+      </li>
+      <li
+        class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium whitespace-nowrap px-2 py-1 text-base"
+        [class.text-blue-600]="selectedFilter === 'Locales comerciales (Venta)'"
+        (click)="changeFilter('Locales comerciales (Venta)')"
+      >
+        Locales comerciales (Venta)
+      </li>
+      <li
+        class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium whitespace-nowrap px-2 py-1 text-base"
+        [class.text-blue-600]="selectedFilter === 'Locales comerciales (Renta)'"
+        (click)="changeFilter('Locales comerciales (Renta)')"
+      >
+        Locales comerciales (Renta)
+      </li>
+    </ul>
+  </div>
 </section>
 
 <!-- Results Grid -->
@@ -76,4 +93,14 @@
     *ngFor="let propertySummary of propertyList"
     [propertySummary]="propertySummary"
   ></app-property-card>
+</section>
+
+<section class="flex justify-center mb-8" *ngIf="hasMoreProperties()">
+  <button
+    (click)="loadNextPage()"
+    class="cursor-pointer text-white px-6 py-3 text-base font-medium rounded-xl hover:bg-blue-700 transition-colors"
+    type="button"
+  >
+    Cargar más
+  </button>
 </section>

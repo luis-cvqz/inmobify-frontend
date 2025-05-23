@@ -12,6 +12,6 @@ export interface PropertySummary {
     n_rooms: number;
     n_bathrooms: number;
     sqm: number;
-    type: string;
+    property_type: string;
     disposition: string;
 }
