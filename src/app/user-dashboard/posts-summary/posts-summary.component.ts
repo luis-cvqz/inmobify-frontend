@@ -49,9 +49,9 @@ export class PostsSummaryComponent {
     if (!confirmation) return;
 
     try {
-      await this.propertiesService.deleteProperty(property_id);
       await this.propertiesService.deletePropertyImagesDirectory(property_id);
       await this.propertiesService.deleteAllPropertyImages(property_id);
+      await this.propertiesService.deleteProperty(property_id);
       await Swal.fire({
         icon: "success",
         text: "Publicación eliminada correctamente",
