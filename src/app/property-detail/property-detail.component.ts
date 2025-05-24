@@ -194,6 +194,17 @@ export class PropertyDetailComponent {
         return;
       }
 
+      if (userId === ownerDetails.id) {
+        await Swal.fire({
+          icon: 'warning',
+          title: '¡Aviso!',
+          text: 'No puedes contactarte a ti mismo como propietario de esta propiedad.',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#007bff'
+        });
+        return;
+      }
+
       const checkProspect: CheckProspect = {
         property_id: propertyDetails.id,
         email: user.email
