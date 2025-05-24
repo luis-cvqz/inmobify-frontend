@@ -30,7 +30,7 @@ export class StoryboardCardComponent {
     if (this.currentStepIndex < this.steps.length - 1) {
       this.currentStepIndex++;
     } else {
-      this.finished.emit(); // Emit an event when the last step is reached
+      this.finished.emit();
       this.closeCard();
     }
   }

@@ -68,6 +68,7 @@ export class DashboardComponent {
         confirmButtonText: "OK",
         confirmButtonColor: "#007bff",
       });
+      window.location.reload();
     } catch {
       await Swal.fire({
         icon: "error",
