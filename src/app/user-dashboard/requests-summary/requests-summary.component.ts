@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { AppointmentsService} from '../../services/appointments.service';
 import {ProspectSummary} from '../../models/prospect-summary';
 import {PropertiesService} from '../../services/properties.service';
-import {forkJoin, Observable} from 'rxjs';
+import {firstValueFrom} from 'rxjs';
 import {PropertyPreview} from '../../models/property-preview';
 
 @Component({
@@ -41,7 +40,6 @@ export class RequestsSummaryComponent implements OnInit {
   constructor(
     private appointmentsService: AppointmentsService,
     private propertiesService: PropertiesService,
-    private router: Router
   ) {}
 
   async ngOnInit() {
@@ -61,20 +59,18 @@ export class RequestsSummaryComponent implements OnInit {
     if (this.prospects.length === 0) return;
 
     const propertyIds = [...new Set(this.prospects.map(p => p.property_id))];
-    const previewObservables: Observable<PropertyPreview>[] = propertyIds.map
-    (id =>
-      this.propertiesService.getPropertyPreview(id)
-    );
 
-    try {
-      const previews = await forkJoin(previewObservables).toPromise();
-      previews?.forEach((preview, index) => {
+    for (const id of propertyIds) {
+      try {
+        const preview = await firstValueFrom(this.propertiesService.getPropertyPreview(id));
         if (preview && preview.id) {
-          this.propertyPreviews.set(propertyIds[index], preview);
+          this.propertyPreviews.set(id, preview);
+        } else {
+          console.log(`No valid preview available for property`);
         }
-      });
-    } catch (err) {
-      console.error('Error loading property previews:', err);
+      } catch (err) {
+        console.warn(`Failed to load preview for property`, err);
+      }
     }
   }
 
