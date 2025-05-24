@@ -7,7 +7,7 @@
     <!-- Normal -->
     <nav class="hidden md:flex items-center w-full gap-3 ml-8 mr-8">
       <a class="text-white hover:text-blue-600" [routerLink]="['/']"
-        >Sobre nosotros</a
+      >Sobre nosotros</a
       >
 
       <div class="flex gap-6 ml-auto items-center">
@@ -40,6 +40,7 @@
             <div class="relative flex items-center space-x-4">
               <div
                 *ngIf="showUserMenu"
+                #menuRef
                 class="absolute top-full right-0 mt-6 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50 overflow-hidden border border-gray-200 dark:border-gray-600"
               >
                 <div
@@ -93,6 +94,35 @@
         >
           <i class="fas fa-user-circle"></i>
         </button>
+        <div
+          *ngIf="showUserMenu"
+          #menuRefMobile
+          class="absolute top-full right-0 mt-6 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50 overflow-hidden border border-gray-200 dark:border-gray-600"
+        >
+          <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+            <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">
+              {{ user?.name || "Usuario" }} {{ user?.last_name || "" }}
+            </p>
+          </div>
+          <a
+            [routerLink]="['/publish-property']"
+            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          >
+            Publicar
+          </a>
+          <a
+            [routerLink]="['/user-dashboard']"
+            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          >
+            Mi perfil
+          </a>
+          <button
+            (click)="logout()"
+            class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          >
+            Cerrar sesión
+          </button>
+        </div>
       </ng-template>
       <button
         type="button"

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { AuthService } from "./services/auth.service";
 import { UsersService } from "./services/users.service";
@@ -14,11 +14,14 @@ import { GoogleMapsModule } from "@angular/google-maps";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
   user: UserNoPass | null = null;
   showUserMenu: boolean = false;
   title = "inmobify";
+
+  @ViewChild('menuRef') menuRef!: ElementRef;
+  @ViewChild('menuRefMobile') menuRefMobile!: ElementRef;
 
   constructor(
     private authService: AuthService,
@@ -32,6 +35,14 @@ export class AppComponent implements OnInit {
     this.authStateService.authChange$.subscribe(() => {
       this.checkAuthState();
     });
+
+    // Agregar listener global para clics
+    document.addEventListener('click', this.handleClickOutside.bind(this));
+  }
+
+  ngOnDestroy(): void {
+    // Limpiar el listener global para evitar memory leaks
+    document.removeEventListener('click', this.handleClickOutside.bind(this));
   }
 
   async checkAuthState(): Promise<void> {
@@ -67,5 +78,17 @@ export class AppComponent implements OnInit {
     this.isAuthenticated = false;
     this.showUserMenu = false;
     this.authStateService.notifyAuthChange();
+  }
+
+  handleClickOutside(event: MouseEvent): void {
+    const target = event.target as Node;
+    const isClickInsideMenu =
+      (this.menuRef && this.menuRef.nativeElement.contains(target)) ||
+      (this.menuRefMobile && this.menuRefMobile.nativeElement.contains(target));
+    const isClickOnToggleButton = (event.target as HTMLElement).closest('button[title="Perfil de usuario"]');
+
+    if (!isClickInsideMenu && !isClickOnToggleButton && this.showUserMenu) {
+      this.showUserMenu = false;
+    }
   }
 }
