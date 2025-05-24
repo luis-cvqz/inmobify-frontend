@@ -13,18 +13,7 @@ import { PropertiesService } from "../services/properties.service";
 })
 export class HomeComponent {
   searchTerm: string = "";
-  cities: string[] = [
-    "Santiago",
-    "Buenos Aires",
-    "Lima",
-    "Bogotá",
-    "Madrid",
-    "Barcelona",
-    "Medellín",
-    "Quito",
-    "Caracas",
-    "Montevideo",
-  ];
+  cities: string[] = [];
   filteredCities: string[] = [];
 
   selectedFilter: string = "Todos";
@@ -37,13 +26,22 @@ export class HomeComponent {
   readonly pageSize = 20;
   currentPage = 0;
 
+  private blurTimeout: any;
+
   constructor() {
     this.loadProperties();
   }
 
   async loadProperties() {
     this.allProperties = await this.propertiesService.getProperties();
-    this.loadNextPage();
+    const cityStateSet = new Set<string>();
+    this.allProperties.forEach(property => {
+      if (property.city && property.state) {
+        cityStateSet.add(`${property.city}, ${property.state}`);
+      }
+    });
+    this.cities = Array.from(cityStateSet).sort();
+    this.applyFilterAndPagination();
   }
 
   applyFilterAndPagination(resetPage: boolean = true) {
@@ -52,12 +50,25 @@ export class HomeComponent {
 
     let filtered = this.filterProperties(this.allProperties);
 
+    if (this.searchTerm.trim()) {
+      filtered = filtered.filter((property) =>
+        property.city.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+
     this.propertyList = filtered.slice(0, this.pageSize);
     this.currentPage = 1;
   }
 
   loadNextPage() {
-    const filtered = this.filterProperties(this.allProperties);
+    let filtered = this.filterProperties(this.allProperties);
+
+    if (this.searchTerm.trim()) {
+      filtered = filtered.filter((property) =>
+        property.city.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+
     const start = this.currentPage * this.pageSize;
     const end = start + this.pageSize;
     this.propertyList = this.propertyList.concat(filtered.slice(start, end));
@@ -65,7 +76,12 @@ export class HomeComponent {
   }
 
   hasMoreProperties(): boolean {
-    const filtered = this.filterProperties(this.allProperties);
+    let filtered = this.filterProperties(this.allProperties);
+    if (this.searchTerm.trim()) {
+      filtered = filtered.filter((property) =>
+        property.city.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
     return this.propertyList.length < filtered.length;
   }
 
@@ -107,14 +123,29 @@ export class HomeComponent {
     }
   }
 
-  selectCity(city: string) {
+  onBlur() {
+    this.blurTimeout = setTimeout(() => {
+      this.filteredCities = [];
+    }, 200);
+  }
+
+  selectCity(cityState: string) {
+    if (this.blurTimeout) {
+      clearTimeout(this.blurTimeout);
+    }
+    const city = cityState.split(',')[0].trim();
     this.searchTerm = city;
     this.filteredCities = [];
+    this.filterResults(city);
   }
 
   filterResults(city: string) {
-    console.log(`Searching for: ${city}`);
+    this.searchTerm = city;
+    this.applyFilterAndPagination(true);
   }
 
-  onSubmit(event: Event, filterValue: string) {}
+  onSubmit(event: Event, filterValue: string) {
+    event.preventDefault();
+    this.filterResults(filterValue);
+  }
 }
