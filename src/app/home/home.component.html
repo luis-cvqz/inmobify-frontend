@@ -7,9 +7,10 @@
     <input
       type="text"
       class="flex-1 p-3 dark:text-gray-200 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      placeholder="Busca una ciudad"
+      placeholder="Busca una ciudad (ej. Dallas)"
       [(ngModel)]="searchTerm"
       (input)="onSearch()"
+      (blur)="onBlur()"
       name="search"
     />
     <button
@@ -18,12 +19,6 @@
       (click)="filterResults(searchTerm)"
     >
       Buscar
-    </button>
-    <button
-      class="cursor-pointer text-white px-6 py-3 text-base font-medium rounded-xl hover:bg-gray-700 transition-colors"
-      type="button"
-    >
-      Ver mapa
     </button>
   </form>
 
