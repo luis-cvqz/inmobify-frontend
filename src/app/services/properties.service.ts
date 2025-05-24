@@ -38,7 +38,7 @@ export class PropertiesService {
       .pipe(map((data) => data ?? {}));
   }
 
-  getPropertyPreview(id: string): Observable<PropertyPreview> {
+  getPropertyPreview(property_id: string): Observable<PropertyPreview> {
     const token = localStorage.getItem("jwt_token");
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export class PropertiesService {
     })
 
     return this.http
-      .get<PropertyPreview>(`${this.propertiesUrl}/user-property-preview/${id}`, {headers})
+      .get<PropertyPreview>(`${this.propertiesUrl}/user-property-preview/${property_id}`, {headers})
       .pipe(map((data) => data ?? {}));
   }
 

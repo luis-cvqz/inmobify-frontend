@@ -79,7 +79,7 @@ export class RequestsSummaryComponent implements OnInit {
   }
 
   getPropertyPreview(propertyId: string): PropertyPreview {
-    return this.propertyPreviews.get(propertyId) || { id: propertyId, title: 'N/A', location: 'N/A', priority: 0};
+    return this.propertyPreviews.get(propertyId)!;
   }
 
   previousPage() {

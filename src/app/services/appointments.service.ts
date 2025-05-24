@@ -3,6 +3,7 @@ import { NewProspect} from '../models/new-prospect';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {firstValueFrom, map} from 'rxjs';
 import {ProspectSummary} from '../models/prospect-summary';
+import {CheckProspect} from '../models/check-prospect';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,16 @@ export class AppointmentsService {
       this.http.get<ProspectSummary[]>(
         `${this.appointmentsUrl}/user-prospects/${userId}`,
         { headers }
+      )
+    );
+    return response;
+  }
+
+  async checkProspectExists(checkProspect: CheckProspect): Promise<boolean> {
+    const response = await firstValueFrom(
+      this.http.post<boolean>(
+          `${this.appointmentsUrl}/prospect/exists`,
+          checkProspect
       )
     );
     return response;
