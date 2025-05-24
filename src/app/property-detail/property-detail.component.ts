@@ -11,6 +11,7 @@ import {UserNoPass} from '../models/user-no-pass';
 import {NewProspect} from '../models/new-prospect';
 import { Image } from "../models/image";
 import Swal from 'sweetalert2';
+import {CheckProspect} from '../models/check-prospect';
 
 @Component({
   selector: "app-property-detail",
@@ -187,6 +188,23 @@ export class PropertyDetailComponent {
           icon: 'error',
           title: '¡Error!',
           text: 'Sucedió un error al crear la solicitud de contacto',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#007bff'
+        });
+        return;
+      }
+
+      const checkProspect: CheckProspect = {
+        property_id: propertyDetails.id,
+        email: user.email
+      };
+
+      const prospectExists = await this.appointmentsService.checkProspectExists(checkProspect);
+      if (prospectExists) {
+        await Swal.fire({
+          icon: 'warning',
+          title: '¡Aviso!',
+          text: 'Ya has enviado una solicitud de contacto para esta propiedad.',
           confirmButtonText: 'OK',
           confirmButtonColor: '#007bff'
         });
