@@ -24,23 +24,62 @@ export class RegisterComponent {
   phone: string = '';
   password: string = '';
   confirmPassword: string = '';
-  errorMessage: string = '';
+  passwordFieldType: string = 'password'; // Para togglear entre 'password' y 'text'
+  confirmPasswordFieldType: string = 'password'; // Para togglear entre 'password' y 'text'
 
   constructor(
     private usersService: UsersService,
     private router: Router
   ) {}
 
-  async onSubmit() {
-    this.errorMessage = '';
+  togglePasswordVisibility() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
 
+  toggleConfirmPasswordVisibility() {
+    this.confirmPasswordFieldType = this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
+  }
+
+  restrictToNumbers(event: Event) {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/[^0-9]/g, ''); // Solo permite números
+    this.phone = input.value; // Actualiza el modelo
+  }
+
+  async onSubmit() {
     if (!this.name || !this.last_name || !this.email || !this.phone || !this.password || !this.confirmPassword) {
-      this.errorMessage = 'Por favor, completa todos los campos.';
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campos incompletos',
+        text: 'Por favor, completa todos los campos.',
+      });
+      return;
+    }
+
+    if (!this.validatePhone(this.phone)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Teléfono inválido',
+        text: 'El teléfono debe contener exactamente 10 dígitos numéricos.',
+      });
       return;
     }
 
     if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'Las contraseñas no coinciden.';
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Las contraseñas no coinciden.',
+      });
+      return;
+    }
+
+    if (!this.validatePassword(this.password)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Contraseña inválida',
+        text: 'La contraseña debe tener entre 8 y 20 caracteres, contener al menos una mayúscula, una minúscula, un número y un carácter especial.',
+      });
       return;
     }
 
@@ -65,11 +104,25 @@ export class RegisterComponent {
       });
       await this.router.navigate(['/login']);
     } catch (error: any) {
-      this.errorMessage = error.message || 'Error al registrarse. Verifica tus datos.';
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message || 'Error al registrarse. Verifica tus datos.',
+      });
     }
   }
 
   onCancel() {
     this.router.navigate(['/login']);
+  }
+
+  private validatePassword(password: string): boolean {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,20}$/;
+    return passwordRegex.test(password);
+  }
+
+  private validatePhone(phone: string): boolean {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(phone);
   }
 }

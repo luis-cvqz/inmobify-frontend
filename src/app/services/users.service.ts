@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { UserNoPass } from '../models/user-no-pass';
 import { NewUser } from '../models/new-user';
-import {OwnerDetails} from '../models/owner-details';
-import {catchError, map, Observable, of} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import { OwnerDetails } from '../models/owner-details';
+import { catchError, map, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,12 @@ export class UsersService {
 
       return uuid;
     } catch (error: any) {
-      throw new Error(error.message || 'Error al registrarse');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message || 'Error al registrarse',
+      });
+      throw error;
     }
   }
 
@@ -56,15 +62,14 @@ export class UsersService {
   }
 
   getOwnerDetails(userId: string): Observable<OwnerDetails> {
-    return this.http.
-      get<OwnerDetails>(`${this.usersUrl}/${userId}`).
-      pipe(map((data) => data ?? {}),
-      catchError(error => {
-        console.error(`Error fetching owner details`, error);
-        return of({} as OwnerDetails);
-      })
-    );
+    return this.http
+      .get<OwnerDetails>(`${this.usersUrl}/${userId}`)
+      .pipe(
+        map((data) => data ?? {}),
+        catchError((error) => {
+          console.error(`Error fetching owner details`, error);
+          return of({} as OwnerDetails);
+        })
+      );
   }
 }
-
-

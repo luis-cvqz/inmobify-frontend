@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
+import Swal from 'sweetalert2';
 
 interface LoginResponse {
   id: string;
@@ -24,7 +25,7 @@ export class AuthService {
       const credentialsToSend = {
         email: credentials.email,
         password: hashedPassword
-      }
+      };
 
       const response = await fetch(this.url, {
         method: 'POST',
@@ -58,7 +59,12 @@ export class AuthService {
         throw new Error(`Falta ${!token ? 'token' : ''} ${!uuid ? 'UUID' : ''}`.trim());
       }
     } catch (error: any) {
-      throw new Error(error.message || 'Error al iniciar sesión');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message || 'Error al iniciar sesión',
+      });
+      throw error;
     }
   }
 
