@@ -5,6 +5,7 @@ import { NgOptimizedImage, CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { UsersService } from '../services/users.service';
 import { AuthStateService } from '../services/auth-state.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ import { AuthStateService } from '../services/auth-state.service';
 export class LoginComponent {
   email: string = '';
   password: string = '';
-  errorMessage: string = '';
+  passwordFieldType: string = 'password';
 
   constructor(
     private authService: AuthService,
@@ -30,9 +31,17 @@ export class LoginComponent {
     private router: Router
   ) {}
 
+  togglePasswordVisibility() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+
   async onSubmit() {
     if (!this.email || !this.password) {
-      this.errorMessage = 'Por favor, completa todos los campos.';
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campos incompletos',
+        text: 'Por favor, completa todos los campos.',
+      });
       return;
     }
 
@@ -50,10 +59,14 @@ export class LoginComponent {
         this.authStateService.notifyAuthChange();
         await this.router.navigate(['/']);
       } else {
-        this.errorMessage = 'No se recibió el ID del usuario.';
+        throw new Error('No se recibió el ID del usuario.');
       }
     } catch (error: any) {
-      this.errorMessage = error.message === 'Falta token' ? 'No se recibió el token de autenticación. Contacta al administrador.' : error.message || 'Error al iniciar sesión. Verifica tus credenciales.';
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al iniciar sesión. Verifica tus credenciales.',
+      });
     }
   }
 }

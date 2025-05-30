@@ -10,10 +10,8 @@
       />
     </div>
 
-    <div
-      class="form-section flex-1 flex flex-col justify-center mx-36 max-md:mx-2.5"
-    >
-      <h1 class="text-gray-300 font-extrabold text-5xl text-center mb-5">
+    <div class="form-section flex-1 flex flex-col justify-center mx-36 max-md:mx-2.5">
+      <h1 class="dark:text-gray-300 font-extrabold text-5xl text-center mb-5">
         Iniciar sesión
       </h1>
       <form
@@ -22,10 +20,10 @@
         #loginForm="ngForm"
       >
         <div class="form-group mb-9">
-          <label class="block mb-2 text-gray-300 font-bold" for="email">Correo electrónico</label>
+          <label class="block mb-2 dark:text-gray-300 font-bold" for="email">Correo electrónico</label>
           <input
             type="email"
-            class="form-control w-full p-2 text-gray-300 border border-[#88BDF2] rounded-lg bg-transparent placeholder-blue-200 text-base"
+            class="form-control w-full p-2 dark:text-gray-300 border dark:border-[#88BDF2] rounded-lg bg-transparent dark:placeholder-blue-200 text-base"
             id="email"
             placeholder="Ingresa tu correo"
             [(ngModel)]="email"
@@ -33,16 +31,20 @@
           />
         </div>
 
-        <div class="form-group mb-9">
-          <label class="block mb-2 text-gray-300 font-bold" for="password">Contraseña</label>
+        <div class="form-group mb-9 relative">
+          <label class="block mb-2 dark:text-gray-300 font-bold" for="password">Contraseña</label>
           <input
-            type="password"
-            class="form-control w-full p-2 placeholder-blue-200 border border-[#88BDF2] rounded-lg bg-transparent"
+            [type]="passwordFieldType"
+            class="form-control w-full p-2 dark:text-gray-300 border dark:border-[#88BDF2] rounded-lg bg-transparent dark:placeholder-blue-200 text-base"
             id="password"
             placeholder="Ingresa tu contraseña"
             [(ngModel)]="password"
             name="password"
           />
+          <i
+            class="fas fa-eye absolute right-3 top-11 cursor-pointer text-gray-500 hover:text-gray-300"
+            (click)="togglePasswordVisibility()"
+          ></i>
         </div>
 
         <button
@@ -53,20 +55,11 @@
           Ingresar
         </button>
 
-        <div
-          *ngIf="errorMessage"
-          class="text-red-600 text-center mt-2 border-white"
-        >
-          {{ errorMessage }}
-        </div>
-
         <div class="register-link mt-2.5 text-center">
-          <label class="text-gray-300"
-            >¿No tienes cuenta?
-            <a routerLink="/register" class="text-blue-400 hover:underline"
-              >Regístrate</a
-            ></label
-          >
+          <label class="dark:text-gray-300">
+            ¿No tienes cuenta?
+            <a routerLink="/register" class="text-blue-400 hover:underline">Regístrate</a>
+          </label>
         </div>
       </form>
     </div>
