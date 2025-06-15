@@ -6,13 +6,19 @@
     (finished)="onBoostStoryboardFinished()"
   ></app-storyboard-card>
 
-  <h1 class="text-3xl font-bold text-gray-800 mb-6">Menú de gestión</h1>
+  <app-update-user
+    *ngIf="showEditProfile"
+    [(isVisible)]="showEditProfile"
+    (finished)="onEditProfileFinished()"
+  ></app-update-user>
+
+  <h1 class="text-3xl font-bold text-gray-800 mb-6 dark:text-white">Menú de gestión</h1>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     <!-- Mi perfil (Left Side) -->
     <section class="bg-white shadow-md rounded-2xl p-6 md:col-span-1">
       <h2 class="text-xl font-semibold mb-4">Mi perfil</h2>
-      <app-user-details></app-user-details>
+      <app-user-details (edit)="handleEditClick()"></app-user-details>
     </section>
 
     <!-- Right Side (Rentas, Solicitudes, Historial) -->

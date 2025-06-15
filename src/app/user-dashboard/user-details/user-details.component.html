@@ -13,10 +13,11 @@
     <p class="text-gray-700">Teléfono: {{ user!.phone }}</p>
   </div>
 
-  <a
-    href="#"
-    class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+  <button
+    type="button"
+    class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer"
+    (click)="onEdit()"
   >
     Editar
-  </a>
+  </button>
 </div>
