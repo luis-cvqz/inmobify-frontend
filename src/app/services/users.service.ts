@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserNoPass } from '../models/user-no-pass';
 import { NewUser } from '../models/new-user';
+import { UpdateUser } from '../models/update-user';
 import { OwnerDetails } from '../models/owner-details';
 import { catchError, map, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -59,6 +60,26 @@ export class UsersService {
     }
 
     return await response.json();
+  }
+
+  async updateUser(userId: string, userData: UpdateUser): Promise<void> {
+    const token = localStorage.getItem('jwt_token') || '';
+    if (!token) {
+      throw new Error('No se encontró el token de autenticación.');
+    }
+    const response = await fetch(`${this.usersUrl}/${userId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.log(errorText);
+      throw new Error(`Error en el servidor al actualizar el usuario: ${response.status}`);
+    }
   }
 
   getOwnerDetails(userId: string): Observable<OwnerDetails> {

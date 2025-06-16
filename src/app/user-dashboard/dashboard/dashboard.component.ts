@@ -14,6 +14,7 @@ import { BoostStep2Component } from "../storyboard-card/boost-step-2/boost-step-
 import { BoostPlanService } from "../../services/boost-plan.service";
 import { PropertiesService } from "../../services/properties.service";
 import Swal from "sweetalert2";
+import {UpdateUserComponent} from '../update-user/update-user.component';
 
 @Component({
   selector: "app-dashboard",
@@ -24,6 +25,7 @@ import Swal from "sweetalert2";
     PostsSummaryComponent,
     StoryboardCardComponent,
     RouterModule,
+    UpdateUserComponent,
   ],
   templateUrl: "./dashboard.component.html",
 })
@@ -39,6 +41,18 @@ export class DashboardComponent {
     { component: BoostStep2Component },
   ];
   currentBoostedProperty: string = "";
+
+  showEditProfile: boolean = false;
+  handleEditClick(): void {
+    this.showEditProfile = true;
+  }
+  closeEditProfile(): void {
+    this.showEditProfile = false;
+  }
+  async onEditProfileFinished() {
+    this.closeEditProfile();
+    location.reload();
+  }
 
   handleBoostClick(property: string): void {
     this.currentBoostedProperty = property;

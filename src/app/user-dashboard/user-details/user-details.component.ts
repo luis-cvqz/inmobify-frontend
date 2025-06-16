@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, EventEmitter, Output } from "@angular/core";
 import { UsersService } from "../../services/users.service";
 import { UserNoPass } from "../../models/user-no-pass";
 import { CommonModule } from "@angular/common";
@@ -18,6 +18,7 @@ export class UserDetailsComponent {
     email: "",
     phone: "",
   };
+  @Output() edit = new EventEmitter<any>();
 
   constructor() {
     const user_id = localStorage.getItem("user_uuid");
@@ -30,5 +31,9 @@ export class UserDetailsComponent {
     this.usersService.fetchUser(user_id).then((user: UserNoPass) => {
       this.user = user;
     });
+  }
+
+  onEdit() {
+    this.edit.emit();
   }
 }
