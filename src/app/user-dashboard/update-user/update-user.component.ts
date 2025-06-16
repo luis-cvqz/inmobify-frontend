@@ -25,7 +25,7 @@ export class UpdateUserComponent {
     last_name: '',
     email: '',
     phone: '',
-    password: ''
+    password: undefined
   }
 
   constructor(
@@ -68,20 +68,23 @@ export class UpdateUserComponent {
       return;
     }
 
-    const userData: UpdateUser = {
+    const userData: Partial<UpdateUser> = {
       name: this.user.name,
       last_name: this.user.last_name,
       email: this.user.email,
-      phone: this.user.phone,
-      password: this.user.password ? CryptoJS.SHA256(this.user.password).toString(CryptoJS.enc.Hex) : ''
+      phone: this.user.phone
     };
+
+    if (this.user.password) {
+      userData.password = CryptoJS.SHA256(this.user.password).toString(CryptoJS.enc.Hex);
+    }
 
     try {
       const userId = localStorage.getItem('user_uuid');
       if (!userId) {
         throw new Error('No se encontró el ID del usuario.');
       }
-      await this.usersServices.updateUser(userId, userData);
+      await this.usersServices.updateUser(userId, userData as UpdateUser);
       await Swal.fire({
         icon: 'success',
         title: '¡Actualización exitosa!',
@@ -95,7 +98,7 @@ export class UpdateUserComponent {
       await Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: error.message || 'Error al actualizar el perfil. Verifica tus datos.',
+        text: 'Error al actualizar el perfil. Verifica tus datos.',
       });
     }
   }
@@ -110,8 +113,7 @@ export class UpdateUserComponent {
           name: userData.name,
           last_name: userData.last_name,
           email: userData.email,
-          phone: userData.phone,
-          password: ''
+          phone: userData.phone
         }
       } else {
         throw new Error('No se recibió el ID del usuario.');
@@ -131,8 +133,8 @@ export class UpdateUserComponent {
 
   restrictToNumbers(event: Event) {
     const input = event.target as HTMLInputElement;
-    input.value = input.value.replace(/[^0-9]/g, ''); // Only allow numbers
-    this.user.phone = input.value; // Update model
+    input.value = input.value.replace(/[^0-9]/g, '');
+    this.user.phone = input.value;
   }
 
   private validatePassword(password: string): boolean {
