@@ -58,7 +58,7 @@ export class PropertiesService {
     try {
       const response = await firstValueFrom(
         this.http.post<any>(
-          `http://localhost:12006/upload/${property_uuid}`,
+          `${this.fileServerUrl}/upload/${property_uuid}`,
           formData,
           {
             observe: "response",

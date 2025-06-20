@@ -28,7 +28,7 @@ export class AuthService {
         password: hashedPassword
       };
 
-      const response = await fetch(this.url, {
+      const response = await fetch(`${this.url}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
