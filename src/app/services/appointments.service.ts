@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {firstValueFrom, map} from 'rxjs';
 import {ProspectSummary} from '../models/prospect-summary';
 import {CheckProspect} from '../models/check-prospect';
+import { NewTransaction } from '../models/new-transaction';
 import {environment} from '../../environments/environment';
 
 @Injectable({
@@ -49,5 +50,17 @@ export class AppointmentsService {
       )
     );
     return response;
+  }
+
+  async postTransaction(newTransaction: NewTransaction): Promise<any> {
+    const token = localStorage.getItem("jwt_token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(token ? {Authorization: `Bearer ${token}`} : {})
+    })
+
+    return firstValueFrom(
+      this.http.post<NewTransaction>(`${this.appointmentsUrl}/transaction`, newTransaction, {headers: headers}),
+    )
   }
 }

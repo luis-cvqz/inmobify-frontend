@@ -12,6 +12,13 @@
     (finished)="onEditProfileFinished()"
   ></app-update-user>
 
+  <app-register-transaction
+    *ngIf="showRegisterTransaction"
+    [(isVisible)]="showRegisterTransaction"
+    (finished)="onRegisterTransactionFinished()"
+  >
+  </app-register-transaction>
+
   <h1 class="text-3xl font-bold text-gray-800 mb-6 dark:text-white">Menú de gestión</h1>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -47,7 +54,7 @@
       <!-- Solicitudes de interesados -->
       <section class="bg-white shadow-md rounded-2xl p-6">
         <h2 class="text-xl font-semibold mb-4">Solicitudes de interesados</h2>
-        <app-requests-summary></app-requests-summary>
+        <app-requests-summary (transaction)="handleRegisterTransaction($event)"></app-requests-summary>
       </section>
 
       <!-- Historial de compras/rentas -->

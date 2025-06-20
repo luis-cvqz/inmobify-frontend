@@ -111,17 +111,17 @@
       <div *ngIf="ownerDetails$ | async as ownerDetails">
         <p
           *ngIf="ownerDetails.name || ownerDetails.last_name"
-          class="mt-2 dark:text-gray-200"
+          class="mt-2 "
         >
           {{ ownerDetails.name }} {{ ownerDetails.last_name }}
         </p>
         <div *ngIf="ownerDetails.email" class="flex items-center gap-2 mt-2">
-          <i class="fa-solid fa-envelope text-xl dark:text-gray-200"></i>
-          <span class="dark:text-gray-200">{{ ownerDetails.email }}</span>
+          <i class="fa-solid fa-envelope text-xl "></i>
+          <span class="">{{ ownerDetails.email }}</span>
         </div>
         <div *ngIf="ownerDetails.phone" class="flex items-center gap-2 mt-2">
-          <i class="fa-solid fa-phone text-xl dark:text-gray-200"></i>
-          <span class="dark:text-gray-200">{{ ownerDetails.phone }}</span>
+          <i class="fa-solid fa-phone text-xl "></i>
+          <span class="">{{ ownerDetails.phone }}</span>
         </div>
         <p
           *ngIf="

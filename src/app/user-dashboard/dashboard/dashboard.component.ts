@@ -13,8 +13,11 @@ import { BoostStep1Component } from "../storyboard-card/boost-step-1/boost-step-
 import { BoostStep2Component } from "../storyboard-card/boost-step-2/boost-step-2.component";
 import { BoostPlanService } from "../../services/boost-plan.service";
 import { PropertiesService } from "../../services/properties.service";
+import { AppointmentsService } from '../../services/appointments.service';
 import Swal from "sweetalert2";
 import {UpdateUserComponent} from '../update-user/update-user.component';
+import {RegisterTransactionComponent} from '../register-transaction/register-transaction.component';
+import {NewTransaction} from '../../models/new-transaction';
 
 @Component({
   selector: "app-dashboard",
@@ -26,6 +29,7 @@ import {UpdateUserComponent} from '../update-user/update-user.component';
     StoryboardCardComponent,
     RouterModule,
     UpdateUserComponent,
+    RegisterTransactionComponent
   ],
   templateUrl: "./dashboard.component.html",
 })
@@ -33,6 +37,7 @@ export class DashboardComponent {
   constructor(
     private boostPlanService: BoostPlanService,
     private propertiesService: PropertiesService,
+    private appointmentsService: AppointmentsService,
   ) {}
 
   showBoostStoryboard: boolean = false;
@@ -52,6 +57,49 @@ export class DashboardComponent {
   async onEditProfileFinished() {
     this.closeEditProfile();
     location.reload();
+  }
+
+  newTransaction: NewTransaction = {
+    prospect_id: "",
+    transaction_type_id: 0,
+    property_id: ""
+  }
+  showRegisterTransaction: boolean = false;
+  handleRegisterTransaction(transaction  : NewTransaction): void {
+    this.newTransaction = transaction;
+
+    this.showRegisterTransaction = true;
+  }
+  closeRegisterTransaction(): void {
+    // Empty the transaction
+    this.newTransaction = {
+      prospect_id: "",
+      transaction_type_id: 0,
+      property_id: ""
+    }
+
+    this.showRegisterTransaction = false;
+  }
+  async onRegisterTransactionFinished() {
+    try {
+      // TODO: enviar transacción
+      await this.appointmentsService.postTransaction(this.newTransaction);
+      await Swal.fire({
+        icon: "success",
+        text: "Se ha registrado la transacción correctamente",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#007bff",
+      });
+    } catch {
+      await Swal.fire({
+        icon: "error",
+        text: "No se pudo establecer conexión con el servidor, inténtalo de nuevo más tarde",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#007bff",
+      });
+    }
+
+    this.closeRegisterTransaction();
   }
 
   handleBoostClick(property: string): void {

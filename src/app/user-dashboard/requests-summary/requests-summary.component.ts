@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppointmentsService} from '../../services/appointments.service';
 import {ProspectSummary} from '../../models/prospect-summary';
 import {PropertiesService} from '../../services/properties.service';
 import {firstValueFrom} from 'rxjs';
 import {PropertyPreview} from '../../models/property-preview';
+import {NewTransaction} from '../../models/new-transaction';
 
 @Component({
   selector: 'app-requests-summary',
@@ -19,6 +20,7 @@ export class RequestsSummaryComponent implements OnInit {
   userId = localStorage.getItem('user_uuid') || '';
   currentPage = 1;
   pageSize = 3;
+  @Output() transaction = new EventEmitter<NewTransaction>();
 
   get pagedProspects(): ProspectSummary[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
@@ -88,5 +90,15 @@ export class RequestsSummaryComponent implements OnInit {
     if (this.canGoNext) {
       this.currentPage++;
     }
+  }
+
+  onTransaction(propertyId: any, prospectId: any, dispositionId: number) {
+    let newTransaction: NewTransaction = {
+      prospect_id: prospectId,
+      transaction_type_id: dispositionId,
+      property_id: propertyId
+    };
+
+    this.transaction.emit(newTransaction);
   }
 }

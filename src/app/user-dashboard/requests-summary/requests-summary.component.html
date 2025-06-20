@@ -9,6 +9,9 @@
         <th class="px-4 py-2 text-left font-semibold text-gray-900 border-b border-gray-300">
           Propiedad
         </th>
+        <th
+          class="px-4 py-2 text-left font-semibold text-gray-900 border-b border-gray-300"
+        ></th>
       </tr>
       </thead>
       <tbody>
@@ -30,6 +33,16 @@
           <ng-template #noPropertyData>
             <p class="text-gray-600">No hay datos disponibles</p>
           </ng-template>
+        </td>
+        <td>
+          <div class="flex space-x-4">
+            <button
+              (click)="onTransaction(prospect.property_id, prospect.id, getPropertyPreview(prospect.property_id).disposition_type_id)"
+              class="text-blue-600 hover:text-blue-800 cursor-pointer"
+            >
+              <i class="fas fa-check-square"></i>
+            </button>
+          </div>
         </td>
       </tr>
       </tbody>

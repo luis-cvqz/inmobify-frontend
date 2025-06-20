@@ -3,4 +3,5 @@ export interface PropertyPreview {
   title: string;
   location: string;
   priority: number;
+  disposition_type_id: number;
 }
