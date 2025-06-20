@@ -6,12 +6,13 @@ import { OwnerDetails } from '../models/owner-details';
 import { catchError, map, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  private usersUrl = 'http://localhost:12000/imf-users/users';
+  private usersUrl = environment.usersUrl;
 
   constructor(private http: HttpClient) {}
 

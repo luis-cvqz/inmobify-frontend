@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import Swal from 'sweetalert2';
+import {environment} from '../../environments/environment';
 
 interface LoginResponse {
   id: string;
@@ -15,7 +16,7 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private url = 'http://localhost:12000/imf-auth/login';
+  private url = environment.authUrl;
 
   constructor() {}
 

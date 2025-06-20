@@ -4,12 +4,13 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {firstValueFrom, map} from 'rxjs';
 import {ProspectSummary} from '../models/prospect-summary';
 import {CheckProspect} from '../models/check-prospect';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentsService {
-  appointmentsUrl = "http://localhost:12000/imf-appointments";
+  appointmentsUrl = environment.appointmentsUrl;
 
   constructor(private http: HttpClient) { }
 

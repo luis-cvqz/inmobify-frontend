@@ -8,13 +8,14 @@ import { PropertyPreview } from "../models/property-preview";
 import { Image } from "../models/image";
 import { NewImage } from "../models/new-image";
 import { UpdatePropertyPriority } from "../models/update-property-priority";
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: "root",
 })
 export class PropertiesService {
-  propertiesUrl = "http://localhost:12000/imf-properties";
-  fileServerUrl = "http://localhost:12000/imf-files";
+  propertiesUrl = environment.propertiesUrl;
+  fileServerUrl = environment.fileServerUrl;
 
   constructor(private http: HttpClient) {}
 
