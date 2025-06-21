@@ -1,37 +1,101 @@
-<section class="search-bar">
-  <form (submit)="onSubmit($event, searchTerm)">
-    <input 
-      type="text" 
-      style="font-size: 1em;"
-      placeholder="Busca una ciudad" 
+<!-- Search Bar Section -->
+<section class="max-w-3xl mx-auto px-4">
+  <form
+    (submit)="onSubmit($event, searchTerm)"
+    class="flex flex-wrap items-center mt-8 gap-2"
+  >
+    <input
+      type="text"
+      class="flex-1 p-3 dark:text-gray-200 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      placeholder="Busca una ciudad (ej. Dallas)"
       [(ngModel)]="searchTerm"
       (input)="onSearch()"
-      name="search" />
+      (blur)="onBlur()"
+      name="search"
+    />
     <button
-      class="primary"
-      style="font-size: 1em;"
+      class="cursor-pointer text-white px-6 py-3 text-base font-medium rounded-xl hover:bg-blue-700 transition-colors"
       type="button"
-      (click)="filterResults(searchTerm)">
+      (click)="filterResults(searchTerm)"
+    >
       Buscar
     </button>
   </form>
+
   <!-- Suggestion List -->
-  <ul *ngIf="filteredCities.length > 0" class="autocomplete-list">
-    <li *ngFor="let city of filteredCities" (click)="selectCity(city)">
+  <ul
+    *ngIf="filteredCities.length > 0"
+    class="absolute z-10 w-64 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto"
+  >
+    <li
+      *ngFor="let city of filteredCities"
+      (click)="selectCity(city)"
+      class="p-2 hover:bg-gray-100 cursor-pointer text-gray-700"
+    >
       {{ city }}
     </li>
   </ul>
 </section>
-<section class="type-filters">
-  <ul>
-    <li>Todos</li>
-    <li>Casas</li>
-    <li>Departamentos</li>
-    <li>Locales comerciales</li>
-  </ul>
+
+<!-- Filter Options -->
+<section class="w-full mx-auto px-4 my-8">
+  <div class="flex justify-center">
+    <ul class="inline-flex gap-4 text-gray-700 flex-nowrap min-w-max">
+      <li
+        class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium whitespace-nowrap px-2 py-1 text-base"
+        [class.text-blue-600]="selectedFilter === 'Todos'"
+        (click)="changeFilter('Todos')"
+      >
+        Todos
+      </li>
+      <li
+        class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium whitespace-nowrap px-2 py-1 text-base"
+        [class.text-blue-600]="selectedFilter === 'Residencias (Venta)'"
+        (click)="changeFilter('Residencias (Venta)')"
+      >
+        Residencias (Venta)
+      </li>
+      <li
+        class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium whitespace-nowrap px-2 py-1 text-base"
+        [class.text-blue-600]="selectedFilter === 'Residencias (Renta)'"
+        (click)="changeFilter('Residencias (Renta)')"
+      >
+        Residencias (Renta)
+      </li>
+      <li
+        class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium whitespace-nowrap px-2 py-1 text-base"
+        [class.text-blue-600]="selectedFilter === 'Locales comerciales (Venta)'"
+        (click)="changeFilter('Locales comerciales (Venta)')"
+      >
+        Locales comerciales (Venta)
+      </li>
+      <li
+        class="cursor-pointer dark:text-gray-200 hover:text-blue-600 font-medium whitespace-nowrap px-2 py-1 text-base"
+        [class.text-blue-600]="selectedFilter === 'Locales comerciales (Renta)'"
+        (click)="changeFilter('Locales comerciales (Renta)')"
+      >
+        Locales comerciales (Renta)
+      </li>
+    </ul>
+  </div>
 </section>
-<section class="results">
+
+<!-- Results Grid -->
+<section
+  class="mx-4 mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+>
   <app-property-card
     *ngFor="let propertySummary of propertyList"
-    [propertySummary]="propertySummary"></app-property-card>
+    [propertySummary]="propertySummary"
+  ></app-property-card>
+</section>
+
+<section class="flex justify-center mb-8" *ngIf="hasMoreProperties()">
+  <button
+    (click)="loadNextPage()"
+    class="cursor-pointer text-white px-6 py-3 text-base font-medium rounded-xl hover:bg-blue-700 transition-colors"
+    type="button"
+  >
+    Cargar más
+  </button>
 </section>

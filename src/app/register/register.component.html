@@ -1,0 +1,97 @@
+<div class="container max-w-full h-screen m-0 p-5 flex justify-center">
+  <div class="w-full max-w-[800px]">
+    <h2 class="dark:text-gray-300 font-extrabold text-5xl text-center mb-5">Crear cuenta</h2>
+    <form class="login-form dark:bg-[#384959] border dark:border-[#88BDF2] rounded-lg p-5" (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <div class="flex flex-wrap justify-between">
+        <div class="flex-1 min-w-[300px] px-2.5">
+          <div class="mb-4">
+            <label for="name" class="dark:text-gray-300 font-bold block mb-2">Nombre</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Ingresa tu nombre completo"
+              [(ngModel)]="name"
+              name="name"
+              required
+              class="form-control w-full p-2 dark:text-gray-300 border dark:border-[#88BDF2] rounded-lg bg-transparent dark:placeholder-blue-200 text-base">
+          </div>
+          <div class="mb-4">
+            <label for="last_name" class="dark:text-gray-300 font-bold block mb-2">Apellido(s)</label>
+            <input
+              type="text"
+              id="last_name"
+              placeholder="Ingresa tus apellidos"
+              [(ngModel)]="last_name"
+              name="last_name"
+              required
+              class="form-control w-full p-2 dark:text-gray-300 border dark:border-[#88BDF2] rounded-lg bg-transparent dark:placeholder-blue-200 text-base">
+          </div>
+          <div class="mb-4">
+            <label for="email" class="dark:text-gray-300 font-bold block mb-2">Correo electrónico</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Ingresa tu correo"
+              [(ngModel)]="email"
+              name="email"
+              required
+              class="form-control w-full p-2 dark:text-gray-300 border dark:border-[#88BDF2] rounded-lg bg-transparent dark:placeholder-blue-200 text-base">
+          </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="flex-1 min-w-[300px] px-2.5">
+          <div class="mb-4">
+            <label for="phone" class="dark:text-gray-300 font-bold block mb-2">Teléfono</label>
+            <input
+              type="text"
+              id="phone"
+              placeholder="Ingresa tu teléfono (10 dígitos)"
+              [(ngModel)]="phone"
+              name="phone"
+              required
+              pattern="[0-9]*"
+              maxlength="10"
+              (input)="restrictToNumbers($event)"
+              class="form-control w-full p-2 dark:text-gray-300 border dark:border-[#88BDF2] rounded-lg bg-transparent dark:placeholder-blue-200 text-base">
+          </div>
+          <div class="mb-4 relative">
+            <label for="password" class="dark:text-gray-300 font-bold block mb-2">Contraseña</label>
+            <input
+              [type]="passwordFieldType"
+              id="password"
+              placeholder="Ingresa tu contraseña"
+              [(ngModel)]="password"
+              name="password"
+              required
+              class="form-control w-full p-2 dark:text-gray-300 border dark:border-[#88BDF2] rounded-lg bg-transparent dark:placeholder-blue-200">
+            <i
+              class="fas fa-eye absolute right-3 top-11 cursor-pointer text-gray-500 hover:text-gray-300"
+              (click)="togglePasswordVisibility()"
+            ></i>
+          </div>
+          <div class="mb-4 relative">
+            <label for="confirmPassword" class="dark:text-gray-300 font-bold block mb-2">Confirmar contraseña</label>
+            <input
+              [type]="confirmPasswordFieldType"
+              id="confirmPassword"
+              placeholder="Confirma tu contraseña"
+              [(ngModel)]="confirmPassword"
+              name="confirmPassword"
+              required
+              class="form-control w-full p-2 dark:text-gray-300 border dark:border-[#88BDF2] rounded-lg bg-transparent dark:placeholder-blue-200">
+            <i
+              class="fas fa-eye absolute right-3 top-11 cursor-pointer text-gray-500 hover:text-gray-300"
+              (click)="toggleConfirmPasswordVisibility()"
+            ></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end mt-5">
+        <button type="button" class="px-5 py-2.5 bg-white text-gray-700 border dark:border-gray-300 border-gray-950 rounded-lg cursor-pointer mr-2.5 hover:bg-gray-100" (click)="onCancel()">Cancelar</button>
+        <button type="submit" class="px-5 py-2.5 bg-blue-600 text-white border-none rounded-lg cursor-pointer hover:bg-blue-700">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>

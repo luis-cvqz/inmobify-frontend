@@ -1,0 +1,104 @@
+<div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 w-full max-w-3xl z-50">
+  <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-6">
+    Editar perfil
+  </h2>
+  <form class="space-y-6" (ngSubmit)="onSubmit()">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <div class="space-y-2">
+          <label for="name" class="dark:text-white block text-sm font-medium text-gray-700">Nombre</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="user.name"
+            placeholder="Martín"
+            required
+            class="mt-1 placeholder:text-gray-500 dark:text-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <label for="last_name" class="dark:text-white block text-sm font-medium text-gray-700">Apellido</label>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            [(ngModel)]="user.last_name"
+            placeholder="Carmona"
+            required
+            class="mt-1 placeholder:text-gray-500 dark:text-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <label for="email" class="dark:text-white block text-sm font-medium text-gray-700">Correo electrónico</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="user.email"
+            placeholder="martin@example.com"
+            required
+            class="mt-1 placeholder:text-gray-500 dark:text-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+          <p class="text-xs text-gray-500 dark:text-gray-300">Utiliza un correo electrónico válido.</p>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="space-y-2">
+          <label for="phone" class="dark:text-white block text-sm font-medium text-gray-700">Teléfono</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            [(ngModel)]="user.phone"
+            (input)="restrictToNumbers($event)"
+            placeholder="555-123-4567"
+            required
+            class="mt-1 placeholder:text-gray-500 dark:text-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            inputmode="tel"
+            pattern="[0-9]{10}"
+          />
+          <p class="text-xs text-gray-500 dark:text-gray-300">Formato: 10 dígitos sin espacios ni guiones.</p>
+        </div>
+
+        <div class="space-y-2">
+          <label for="password" class="dark:text-white block text-sm font-medium text-gray-700">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="user.password"
+            placeholder="********"
+            class="mt-1 placeholder:text-gray-500 dark:text-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+          <p class="text-xs text-gray-500 dark:text-gray-300">Mínimo 8 caracteres. Déjalo en blanco para mantener la contraseña actual.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end space-x-2">
+      <button
+        type="button"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        (click)="closeForm()"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>
+
+<div
+  class="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-40"
+  (click)="closeForm()"
+  *ngIf="showBackdrop"
+></div>

@@ -1,0 +1,77 @@
+<ng-container *ngIf="userId && properties.length > 0; else notAvailable">
+  <div class="overflow-x-auto">
+    <table class="min-w-full border-collapse border border-gray-300">
+      <thead class="bg-gray-200">
+        <tr>
+          <th
+            class="px-4 py-2 font-semibold text-gray-900 border-b border-gray-300"
+          ></th>
+          <th
+            class="px-4 py-2 text-left font-semibold text-gray-900 border-b border-gray-300"
+          >
+            Título
+          </th>
+          <th
+            class="px-4 py-2 text-left font-semibold text-gray-900 border-b border-gray-300"
+          >
+            Dirección
+          </th>
+          <th
+            class="px-4 py-2 text-left font-semibold text-gray-900 border-b border-gray-300"
+          ></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let property of properties"
+          class="even:bg-gray-50 hover:bg-gray-100"
+        >
+          <td class="px-4 py-2 border-b border-gray-300 text-gray-700">
+            <button
+              (click)="onSeeProperty(property.id)"
+              class="text-gray-600 hover:text-gray-800 cursor-pointer"
+            >
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </td>
+          <td class="px-4 py-2 border-b border-gray-300 text-gray-700">
+            {{ property.title }}
+          </td>
+          <td class="px-4 py-2 border-b border-gray-300 text-gray-700">
+            {{ property.location }}
+          </td>
+          <td class="px-4 py-2 border-b border-gray-300 text-gray-700">
+            <div class="flex space-x-4">
+              <button
+                *ngIf="property.priority <= 0"
+                (click)="onBoost(property.id)"
+                class="text-yellow-600 hover:text-yellow-800 cursor-pointer"
+              >
+                <i class="fa-solid fa-bolt"></i>
+              </button>
+              <button
+                (click)="onEdit(property.id)"
+                class="text-blue-600 hover:text-blue-800 cursor-pointer"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+              <button
+                (click)="onDelete(property.id)"
+                class="text-red-600 hover:text-red-800 cursor-pointer"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
+              <p *ngIf="property.priority > 0" class="text-green-800">
+                <i class="fa-solid fa-dollar-sign"></i>
+              </p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+<ng-template #notAvailable>
+  <p class="text-gray-600">No hay propiedades para mostrar en este momento.</p>
+</ng-template>

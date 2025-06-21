@@ -1,0 +1,23 @@
+<div class="max-w-sm p-4 text-center">
+  <img
+    src="/assets/user-2.png"
+    alt="user-image"
+    class="w-24 h-24 mr-auto ml-auto rounded-full border border-gray-300"
+  />
+
+  <div class="mt-4">
+    <p class="text-lg font-semibold text-gray-900">
+      {{ user!.name }} {{ user!.last_name }}
+    </p>
+    <p class="text-gray-700">Correo: {{ user!.email }}</p>
+    <p class="text-gray-700">Teléfono: {{ user!.phone }}</p>
+  </div>
+
+  <button
+    type="button"
+    class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer"
+    (click)="onEdit()"
+  >
+    Editar
+  </button>
+</div>

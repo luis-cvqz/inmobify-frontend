@@ -1,10 +1,164 @@
-<main>
-  <header class="brand-name">
-      <a [routerLink]="['/']">
-        Inmobify
-      </a>
-    </header>
-  <section class="content">
+<main class="bg-white dark:bg-gray-800 min-h-screen">
+  <header class="flex items-center h-16">
+    <a [routerLink]="['/']" class="brand-name text-2xl text-white ml-8">
+      Inmobify
+    </a>
+
+    <!-- Normal -->
+    <nav class="hidden md:flex items-center w-full gap-3 ml-8 mr-8">
+      <a class="text-white hover:text-blue-600" [routerLink]="['/']"
+      >Sobre nosotros</a
+      >
+
+      <div class="flex gap-6 ml-auto items-center">
+        <ng-container *ngIf="!isAuthenticated; else userMenu">
+          <button
+            type="button"
+            [routerLink]="['/login']"
+            class="py-3 px-6 mr-2 text-white cursor-pointer text-base rounded-xl access-buttons"
+          >
+            Acceder
+          </button>
+        </ng-container>
+        <ng-template #userMenu>
+          <div class="relative flex items-center space-x-4">
+            <button
+              type="button"
+              [routerLink]="['/publish-property']"
+              class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition duration-200 cursor-pointer"
+            >
+              Publicar
+            </button>
+            <button
+              type="button"
+              (click)="toggleUserMenu()"
+              class="text-white text-3xl cursor-pointer hover:text-gray-300 transition duration-150"
+              title="Perfil de usuario"
+            >
+              <i class="fas fa-user-circle text-3xl"></i>
+            </button>
+            <div class="relative flex items-center space-x-4">
+              <div
+                *ngIf="showUserMenu"
+                #menuRef
+                class="absolute top-full right-0 mt-6 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50 overflow-hidden border border-gray-200 dark:border-gray-600"
+              >
+                <div
+                  class="px-4 py-3 border-b border-gray-100 dark:border-gray-700"
+                >
+                  <p
+                    class="text-sm font-semibold text-gray-800 dark:text-gray-100"
+                  >
+                    {{ user?.name || "Usuario" }} {{ user?.last_name || "" }}
+                  </p>
+                </div>
+                <a
+                  [routerLink]="['/user-dashboard']"
+                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                >
+                  Mi perfil
+                </a>
+                <button
+                  (click)="logout()"
+                  class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                >
+                  Cerrar sesión
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </nav>
+
+    <!-- Mobile -->
+    <nav class="flex md:hidden items-center gap-6 ml-auto mr-4">
+      <button type="button" class="text-2xl text-white cursor-pointer">
+        <i class="fas fa-plus"></i>
+      </button>
+      <ng-container *ngIf="!isAuthenticated; else userMenuMobile">
+        <button
+          type="button"
+          [routerLink]="['/login']"
+          class="text-2xl text-white cursor-pointer"
+        >
+          <i class="fa-solid fa-right-to-bracket"></i>
+        </button>
+      </ng-container>
+      <ng-template #userMenuMobile>
+        <button
+          type="button"
+          (click)="toggleUserMenu()"
+          class="text-2xl text-white cursor-pointer"
+          title="Perfil de usuario"
+        >
+          <i class="fas fa-user-circle"></i>
+        </button>
+        <div
+          *ngIf="showUserMenu"
+          #menuRefMobile
+          class="absolute top-full right-0 mt-6 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50 overflow-hidden border border-gray-200 dark:border-gray-600"
+        >
+          <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+            <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">
+              {{ user?.name || "Usuario" }} {{ user?.last_name || "" }}
+            </p>
+          </div>
+          <a
+            [routerLink]="['/publish-property']"
+            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          >
+            Publicar
+          </a>
+          <a
+            [routerLink]="['/user-dashboard']"
+            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          >
+            Mi perfil
+          </a>
+          <button
+            (click)="logout()"
+            class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          >
+            Cerrar sesión
+          </button>
+        </div>
+      </ng-template>
+      <button
+        type="button"
+        class="text-2xl text-white cursor-pointer menu-toggle"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </nav>
+  </header>
+  <section>
     <router-outlet></router-outlet>
   </section>
+
+  <footer class="text-white py-6">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <h3 class="text-lg font-semibold brand-name mb-2">Inmobify</h3>
+          <p class="text-sm">
+            © 2025 Inmobify. Todos los derechos reservados.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Enlaces</h3>
+          <ul class="text-sm space-y-2">
+            <li><a href="#" class="hover:text-gray-300">Inicio</a></li>
+            <li><a href="#" class="hover:text-gray-300">Propiedades</a></li>
+            <li><a href="#" class="hover:text-gray-300">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Contacto</h3>
+          <p class="text-sm">Email: info&#64;inmobify.com</p>
+          <p class="text-sm">Teléfono: +1 234 567 890</p>
+        </div>
+      </div>
+    </div>
+  </footer>
 </main>

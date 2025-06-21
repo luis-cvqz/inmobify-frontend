@@ -1,0 +1,74 @@
+<ng-container *ngIf="userId && prospects.length > 0; else notAvailable">
+  <div class="overflow-x-auto">
+    <table class="min-w-full border-collapse border border-gray-300">
+      <thead class="bg-gray-200">
+      <tr>
+        <th class="px-4 py-2 text-left font-semibold text-gray-900 border-b border-gray-300">
+          Datos del interesado
+        </th>
+        <th class="px-4 py-2 text-left font-semibold text-gray-900 border-b border-gray-300">
+          Propiedad
+        </th>
+        <th
+          class="px-4 py-2 text-left font-semibold text-gray-900 border-b border-gray-300"
+        ></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let prospect of pagedProspects" class="even:bg-gray-50 hover:bg-gray-100">
+        <td class="px-4 py-2 border-b border-gray-300 text-gray-700">
+          <div class="flex flex-col">
+            <span class="font-medium">{{ prospect.name }} {{ prospect.last_name }}</span>
+            <span>{{ prospect.email }}</span>
+            <span>{{ prospect.phone }}</span>
+          </div>
+        </td>
+        <td class="px-4 py-2 border-b border-gray-300 text-gray-700">
+          <ng-container *ngIf="propertyPreviews.has(prospect.property_id); else noPropertyData">
+            <div class="flex flex-col">
+              <span>{{ getPropertyPreview(prospect.property_id).title }}</span>
+              <span>{{ getPropertyPreview(prospect.property_id).location }}</span>
+            </div>
+          </ng-container>
+          <ng-template #noPropertyData>
+            <p class="text-gray-600">No hay datos disponibles</p>
+          </ng-template>
+        </td>
+        <td>
+          <div class="flex space-x-4">
+            <button
+              (click)="onTransaction(prospect.property_id, prospect.id, getPropertyPreview(prospect.property_id).disposition_type_id)"
+              class="text-blue-600 hover:text-blue-800 cursor-pointer"
+            >
+              <i class="fas fa-check-square"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex justify-between mt-4">
+    <button
+      (click)="previousPage()"
+      [disabled]="!canGoPrevious"
+      class="cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+    >
+      Anterior
+    </button>
+    <span class="self-center text-gray-600">
+      Página {{ currentPage }} de {{ totalPages }}
+    </span>
+    <button
+      (click)="nextPage()"
+      [disabled]="!canGoNext"
+      class="cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+    >
+      Siguiente
+    </button>
+  </div>
+</ng-container>
+
+<ng-template #notAvailable>
+  <p class="text-gray-600">No hay solicitudes para mostrar en este momento.</p>
+</ng-template>

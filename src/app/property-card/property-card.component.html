@@ -1,17 +1,29 @@
-<section class="listing">
-    <a href="">
-        <img class="listing-photo" [src]="propertySummary.image_path" alt="House">
-    </a>
-    <a href="" style="text-decoration: none">
-        <h2 class="listing-heading">{{ propertySummary.title }}</h2>
-    </a>
-    <p class="listing-info">${{ propertySummary.price }}</p>
-    <p class="listing-info">
-        {{ propertySummary.street }} {{ propertySummary.house_number }}, {{ propertySummary.neighborhood }}, {{ propertySummary.zip_code }}, {{ propertySummary.city }}, {{ propertySummary.state }}
-    </p>
-    <div class="amenities-container">
-        <p class="rooms-number">Habitaciones: {{ propertySummary.n_rooms }}</p>
-        <p class="bathrooms-number">Baños: {{ propertySummary.n_bathrooms }}</p>
-        <p class="sqm">Tamaño: {{ propertySummary.sqm }}m²</p>
-    </div>
+<section class="listing dark:text-gray-200">
+  <a [routerLink]="['/property-detail', propertySummary.id]">
+    <img
+      class="object-cover rounded-t-xl"
+      [src]="propertySummary.image_path"
+      alt="House"
+    />
+  </a>
+  <a
+    [routerLink]="['/property-detail', propertySummary.id]"
+    class="no-decoration"
+  >
+    <h2 class="text-xl m-5 mb-3 font-bold">{{ propertySummary.title }}</h2>
+  </a>
+  <p class="ml-5 mb-3 font-bold">${{ propertySummary.price }}</p>
+  <p class="ml-5 mr-5">
+    {{ propertySummary.street }} {{ propertySummary.house_number }},
+    {{ propertySummary.neighborhood }}, {{ propertySummary.zip_code }},
+    {{ propertySummary.city }}, {{ propertySummary.state }}
+  </p>
+  <div class="flex items-center justify-center gap-6 p-4">
+    <i class="fa-solid fa-bed"></i>
+    <p>{{ propertySummary.n_rooms }}</p>
+    <i class="fa-solid fa-bath"></i>
+    <p>{{ propertySummary.n_bathrooms }}</p>
+    <i class="fa-solid fa-ruler"></i>
+    <p>{{ propertySummary.sqm }}m²</p>
+  </div>
 </section>

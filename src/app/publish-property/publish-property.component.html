@@ -1,0 +1,436 @@
+<section class="max-w-6xl mx-auto p-6 mb-12">
+  <form
+    class="flex flex-col space-y-4 md:w-3/4 mx-auto"
+    (ngSubmit)="onSubmit()"
+    #form="ngForm"
+  >
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 dark:text-white">
+      Registra tu propiedad
+    </h1>
+    <h2 class="text-xl font-bold text-gray-800 mb-4 dark:text-white">
+      Información de la propiedad
+    </h2>
+    <div>
+      <label
+        for="title"
+        class="block text-sm font-medium text-gray-700 dark:text-white"
+        >Título de publicación</label
+      >
+      <input
+        type="text"
+        id="title"
+        name="title"
+        maxlength="255"
+        required
+        #titleModel="ngModel"
+        [class.border-red-500]="titleModel.invalid && titleModel.touched"
+        [(ngModel)]="formData.title"
+        class="mt-1 p-2 block w-full rounded-md border-1 border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+    <div>
+      <label class="block dark:text-white text-sm font-medium text-gray-700"
+        >Descripción</label
+      >
+      <textarea
+        id="description"
+        name="description"
+        maxlength="1024"
+        required
+        #descriptionModel="ngModel"
+        [class.border-red-500]="
+          descriptionModel.invalid && descriptionModel.touched
+        "
+        [(ngModel)]="formData.description"
+        class="mt-1 p-2 block w-full rounded-md border-1 border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+      ></textarea>
+      <p class="text-sm text-gray-500 dark:text-white">
+        {{ formData.description.length }}/1024 caracteres
+      </p>
+    </div>
+    <div class="flex space-x-4">
+      <div class="w-1/2">
+        <label
+          for="no_rooms"
+          class="block dark:text-white text-sm font-medium text-gray-700"
+          >No. Habitaciones</label
+        >
+        <input
+          type="number"
+          id="no_rooms"
+          name="no_rooms"
+          min="0"
+          max="99"
+          (keypress)="allowOnlyNumbers($event)"
+          required
+          [(ngModel)]="formData.no_rooms"
+          class="mt-1 p-2 block w-full rounded-md border-1 border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+      <div class="w-1/2">
+        <label
+          for="no_bathrooms"
+          class="block dark:text-white text-sm font-medium text-gray-700"
+          >No. Baños</label
+        >
+        <input
+          type="number"
+          id="no_bathrooms"
+          name="no_bathrooms"
+          min="0"
+          max="99"
+          (keypress)="allowOnlyNumbers($event)"
+          required
+          [(ngModel)]="formData.no_bathrooms"
+          class="mt-1 p-2 block w-full rounded-md border-1 border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+    </div>
+    <div class="flex space-x-4">
+      <div class="w-1/2">
+        <label
+          for="disposition_type"
+          class="block dark:text-white text-sm font-medium text-gray-700"
+          >Tipo de dispocisión</label
+        >
+        <div class="relative">
+          <select
+            id="disposition_type"
+            name="disposition_type"
+            required
+            [(ngModel)]="formData.disposition_type_id"
+            #dispositionModel="ngModel"
+            (ngModelChange)="formData.disposition_type_id = +$event"
+            [class.border-red-500]="
+              dispositionModel.invalid && dispositionModel.touched
+            "
+            class="appearance-none mt-1 p-2 pr-10 block w-full rounded-md border-1 border-gray-600 dark:text-white bg-white dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="1">Venta</option>
+            <option value="2">Renta</option>
+          </select>
+
+          <!-- Down arrow icon -->
+          <div
+            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500 dark:text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="w-1/2">
+        <label
+          for="size"
+          class="block dark:text-white text-sm font-medium text-gray-700"
+          >Tamaño(m²)</label
+        >
+        <input
+          type="text"
+          id="size"
+          name="size"
+          min="0"
+          max="999999"
+          #sizeModel="ngModel"
+          [class.border-red-500]="sizeModel.invalid && sizeModel.touched"
+          (keypress)="allowOnlyNumbers($event)"
+          required
+          [(ngModel)]="formData.size"
+          class="mt-1 p-2 block w-full rounded-md border-1 border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+    </div>
+    <div>
+      <label
+        for="price"
+        class="block dark:text-white text-sm font-medium text-gray-700"
+        >Precio</label
+      >
+      <input
+        type="numeric"
+        id="price"
+        name="price"
+        min="0"
+        max="999999999"
+        #priceModel="ngModel"
+        [class.border-red-500]="priceModel.invalid && priceModel.touched"
+        (keypress)="allowOnlyNumbers($event)"
+        required
+        [(ngModel)]="formData.price"
+        class="mt-1 p-2 block w-full rounded-md border-1 border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+    <div>
+      <label
+        for="property_type_id"
+        class="block dark:text-white text-sm font-medium text-gray-700"
+        >Tipo de propiedad</label
+      >
+      <div class="relative">
+        <select
+          id="property_type_id"
+          name="property_type"
+          required
+          [(ngModel)]="formData.property_type_id"
+          #propertyTypeModel="ngModel"
+          [class.border-red-500]="
+            propertyTypeModel.invalid && propertyTypeModel.touched
+          "
+          class="appearance-none mt-1 p-2 pr-10 block w-full rounded-md border-1 border-gray-600 dark:text-white bg-white dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500"
+        >
+          <option value="1">Comercial</option>
+          <option value="2">Residencial</option>
+        </select>
+
+        <!-- Down arrow icon -->
+        <div
+          class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3"
+        >
+          <svg
+            class="w-4 h-4 text-gray-500 dark:text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label
+        for="images"
+        class="block dark:text-white text-sm font-medium text-gray-700"
+      >
+        Imágenes
+      </label>
+      <input
+        type="file"
+        id="images"
+        name="images"
+        multiple
+        accept="image/*"
+        (change)="onFilesSelected($event)"
+        class="mt-1 p-8 block w-full cursor-pointer rounded-md border-1 border-dashed border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+      />
+      <ul
+        class="text-sm text-gray-600 dark:text-gray-300 mt-2 list-disc list-inside"
+      >
+        <li
+          *ngFor="let image of formData.images; let i = index"
+          class="flex items-center justify-between"
+        >
+          <span>{{ image.name }}</span>
+          <button
+            type="button"
+            (click)="removeImage(i)"
+            class="ml-2 text-red-500 hover:text-red-700"
+          >
+            ✖
+          </button>
+        </li>
+      </ul>
+      <p class="text-sm text-gray-500 mt-1 dark:text-white">
+        {{ formData.images.length }} / 10 imágenes seleccionadas
+      </p>
+    </div>
+    <h2 class="text-xl dark:text-white font-bold text-gray-800 mb-4 mt-4">
+      Dirección de la propiedad
+    </h2>
+    <div>
+      <label
+        for="address"
+        class="block dark:text-white text-sm font-medium text-gray-700"
+        >Dirección (calle)</label
+      >
+      <input
+        type="text"
+        id="address"
+        name="address"
+        maxlength="255"
+        [(ngModel)]="formData.address"
+        #addressModel="ngModel"
+        [class.border-red-500]="addressModel.invalid && addressModel.touched"
+        required
+        class="mt-1 p-2 block w-full rounded-md border-1 border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <div class="flex space-x-4">
+      <div class="w-1/2">
+        <label
+          for="house_number"
+          class="block text-sm dark:text-white font-medium text-gray-700"
+          >Número</label
+        >
+        <input
+          type="text"
+          id="house_number"
+          name="house_number"
+          maxlength="255"
+          #houseNumberModel="ngModel"
+          [class.border-red-500]="
+            houseNumberModel.invalid && houseNumberModel.touched
+          "
+          required
+          [(ngModel)]="formData.house_number"
+          class="mt-1 p-2 block w-full rounded-md border-1 dark:text-white border-gray-600 focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+      <div class="w-1/2">
+        <label
+          for="neighborhood"
+          class="block text-sm dark:text-white font-medium text-gray-700"
+          >Colonia</label
+        >
+        <input
+          type="text"
+          id="neighborhood"
+          name="neighborhood"
+          maxlength="255"
+          #neighborhoodModel="ngModel"
+          [class.border-red-500]="
+            neighborhoodModel.invalid && neighborhoodModel.touched
+          "
+          required
+          [(ngModel)]="formData.neighborhood"
+          class="mt-1 p-2 block w-full rounded-md border-1 dark:text-white border-gray-600 focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+    </div>
+
+    <div class="flex space-x-4">
+      <div class="w-1/2 relative">
+        <label
+          for="city"
+          class="block text-sm dark:text-white font-medium text-gray-700"
+        >
+          Municipio
+        </label>
+        <div class="relative">
+          <input
+            id="city_name"
+            name="city"
+            #cityModel="ngModel"
+            [class.border-red-500]="cityModel.invalid && cityModel.touched"
+            required
+            [(ngModel)]="formData.city_name"
+            class="appearance-none mt-1 p-2 pr-10 block w-full rounded-md border border-gray-600 dark:text-white bg-white dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+      </div>
+
+      <div class="w-1/2 relative">
+        <label
+          for="state"
+          class="block text-sm dark:text-white font-medium text-gray-700"
+        >
+          Estado
+        </label>
+        <div class="relative">
+          <select
+            id="state_id"
+            name="state"
+            #stateModel="ngModel"
+            [class.border-red-500]="stateModel.invalid && stateModel.touched"
+            required
+            [(ngModel)]="formData.state_id"
+            (ngModelChange)="formData.state_id = +$event"
+            class="appearance-none mt-1 p-2 pr-10 block w-full rounded-md border border-gray-600 dark:text-white bg-white dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="0" disabled selected>Selecciona un estado</option>
+            <option *ngFor="let state of states" [value]="state.id">
+              {{ state.name }}
+            </option>
+          </select>
+
+          <div
+            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500 dark:text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label
+        for="zip_code"
+        class="block text-sm dark:text-white font-medium text-gray-700"
+        >Código postal</label
+      >
+      <input
+        type="text"
+        id="zip_code"
+        name="zip_code"
+        minlength="5"
+        required
+        maxlength="5"
+        #zipCodeModel="ngModel"
+        [class.border-red-500]="zipCodeModel.invalid && zipCodeModel.touched"
+        (keypress)="allowOnlyNumbers($event)"
+        [(ngModel)]="formData.zip_code"
+        class="mt-1 p-2 block dark:text-white w-full rounded-md border-1 border-gray-600 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+    <h2 class="text-xl font-bold dark:text-white text-gray-800 mb-4 mt-4">
+      Selecciona la ubicación en el mapa
+    </h2>
+    <div id="map" style="height: 300px" class="rounded-md"></div>
+    <div class="flex items-center space-x-2">
+      <input
+        type="checkbox"
+        id="terms"
+        [(ngModel)]="termsAccepted"
+        name="terms"
+        class="h-4 w-4 text-blue-600"
+      />
+      <label for="terms" class="text-sm text-gray-700 dark:text-white"
+        >Acepto los términos y condiciones</label
+      >
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!termsAccepted"
+      class="w-full cursor-pointer bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition disabled:opacity-50 mt-4"
+    >
+      Continuar
+    </button>
+    <div *ngFor="let message of uploadMessages">
+      {{ message }}
+    </div>
+  </form>
+</section>
